@@ -47,6 +47,17 @@ class Annonce
      */
     private $validation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Recruteur::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recruteur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $consultant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +131,30 @@ class Annonce
     public function setValidation(bool $validation): self
     {
         $this->validation = $validation;
+
+        return $this;
+    }
+
+    public function getRecruteur(): ?Recruteur
+    {
+        return $this->recruteur;
+    }
+
+    public function setRecruteur(?Recruteur $recruteur): self
+    {
+        $this->recruteur = $recruteur;
+
+        return $this;
+    }
+
+    public function getConsultant(): ?User
+    {
+        return $this->consultant;
+    }
+
+    public function setConsultant(?User $consultant): self
+    {
+        $this->consultant = $consultant;
 
         return $this;
     }
