@@ -18,7 +18,10 @@ Pour mise à jour de la BDD
 php bin/console doctrine:schema:update
 
 # Configuration des routes
-config/routes.yaml
+config/routes.yaml ou composer require annotations
+
+Voir la liste des routes
+php bin/console debug:router
 
 # Création des controllers
 php bin/console make:controller
@@ -56,6 +59,7 @@ yes - no - no - homepage
 
 ## Création du formulaire d'authentification
 php bin/console make:auth
+
 
 Puis on modifie 
 config/packages/security.yaml
