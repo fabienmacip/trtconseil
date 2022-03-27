@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ConsultantController!{% endblock %}
+{% block title %}Consultant {{consultant.nom}}{% endblock %}
 
 {% block body %}
 <style>
@@ -8,13 +8,18 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h2>Consultant</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/src/Controller/ConsultantController.php'|file_link(0) }}">src/Controller/ConsultantController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/templates/consultant/index.html.twig'|file_link(0) }}">templates/consultant/index.html.twig</a></code></li>
-    </ul>
+<div>
+
+    {% if consultant %}
+        <div>{{consultant.id}}</div>
+        <div>{{consultant.username|lower}}</div>
+        <div>{{consultant.nom|upper }}</div>
+        <div>{{consultant.prenom|capitalize}}</div>        
+    {% else %}
+        <em>Données du consultant non trouvées.</em>
+    {% endif %}
+
 </div>
 {% endblock %}
