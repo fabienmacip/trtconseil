@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+
+{% block title %}Consultant{% endblock %}
+
+{% form_theme formConsultant 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+
+<h1>Création d'un consultant</h1>
+
+{{ form_start(formConsultant) }}
+
+{{ form_row(formConsultant.nom, {'attr' : { 'placeholder' : 'nom'}}) }}
+{{ form_row(formConsultant.prenom, {'attr' : { 'placeholder' : 'prénom'}}) }}
+{{ form_row(formConsultant.username, {'attr' : { 'placeholder' : 'mail'}}) }}
+{{ form_row(formConsultant.password, {'attr' : { 'placeholder' : 'password'}}) }}
+{{ form_row(formConsultant.role, {'attr' : { 'placeholder' : 'role', 'value' : 'consultant', 'readonly' : 'true'}}) }}
+
+<input type="hidden" name="roles" placeholder="roles" value="[]"/>
+<button type="submit">
+    {% if editMode %}
+        Enregistrer les modifications
+    {% else %}
+        Ajouter le consultant
+    {% endif %}
+</button>
+
+{{ form_end(formConsultant) }}
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .container{
+            width: 100%;
+            border: 1px solid #ddd;
+            padding-top: 13px;
+            border-radius: 10px;
+            background-color: #F9F9FA;
+            color: #413C49;
+            margin-top: 20px;
+            padding-bottom: 13px;
+        }
+
+        .error{
+            color: red;
+            font-weight: 600;
+        }
+
+        .has-error ul{
+            color: red;
+            list-style-type: none;
+            padding-left: 0;
+            padding-top: 5px;
+            font-style: italic;
+        }
+
+        .btn-lg{
+            color: #fff;
+            margin: auto;
+            margin-top: 30px;
+        }
+    </style>
+{% endblock %}

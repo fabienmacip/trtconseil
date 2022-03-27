@@ -124,4 +124,20 @@ On ajoute ces 2 lignes à access_control:
 - { path: ^/(login|register), roles: IS_AUTHENTICATED_ANONYMOUSLY}
 - { path: ^/, roles: IS_AUTHENTICATED_FULLY}
 
+# Interface d'amdministration
+composer require easycorp/easyadmin-bundle  
+php bin/console make:admin:dashboard  
+php bin/console make:admin:crud  
 
+-------------------------------------------------------
+
+### Ancien formulaire CONSULTANT
+<form action="" method="post">
+    <input type="text" name="username" placeholder="username" />
+    <input type="password" name="password" placeholder="password" />
+    <input type="text" name="nom" placeholder="nom" />
+    <input type="text" name="prenom" placeholder="prenom" />
+    <input type="text" name="roles" placeholder="roles" value="[]"/>
+    <input type="text" name="role" placeholder="role" value="consultant"/>
+    <button type="submit">Enregister</button>
+</form>
