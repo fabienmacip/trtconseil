@@ -8,6 +8,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
@@ -23,32 +25,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Length(min=3, max=180)
+     * @Assert\Email(message = "Veuillez entrer une adresse mail valide.")
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * 
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min=8, max=255, minMessage="Au moins 8 caractères")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\Length(min=1, max=40)
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Assert\Length(min=1, max=30)
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\Length(min=1, max=40)
      */
     private $role;
 

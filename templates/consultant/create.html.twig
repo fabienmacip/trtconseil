@@ -17,7 +17,7 @@
 {{ form_row(formConsultant.nom, {'attr' : { 'placeholder' : 'nom'}}) }}
 {{ form_row(formConsultant.prenom, {'attr' : { 'placeholder' : 'prénom'}}) }}
 {{ form_row(formConsultant.username, {'attr' : { 'placeholder' : 'mail'}}) }}
-{{ form_row(formConsultant.password, {'attr' : { 'placeholder' : 'password'}}) }}
+{{ form_row(formConsultant.password, {'type' : 'password'}) }}
 {{ form_row(formConsultant.role, {'attr' : { 'placeholder' : 'role', 'value' : 'consultant', 'readonly' : 'true'}}) }}
 
 <input type="hidden" name="roles" placeholder="roles" value="[]"/>

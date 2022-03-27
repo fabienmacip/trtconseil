@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Consultant {{consultant.nom}}{% endblock %}
+{% block title %}Consultant 
+    {% if consultant %}
+        {{consultant.nom}}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
 <style>
@@ -22,4 +26,6 @@
     {% endif %}
 
 </div>
+<br/><br/>
+<a href="{{ path('consultants') }}" role="button" class="btn btn-danger">Retour à la liste des consultants</a>
 {% endblock %}

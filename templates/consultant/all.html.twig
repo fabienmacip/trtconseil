@@ -13,6 +13,7 @@
     <ul>
         {%for c in consultants %}
             <li>{{ c.nom|upper }} {{c.prenom|capitalize}} {{c.username|lower}}
+                <a href="{{ path('app_consultant', {'id': c.id}) }}">Détail</a> - 
                 <a href="{{ path('consultant_update', {'id': c.id}) }}" role="button" class="btn btn-danger">Modifier</a> - 
                 <a href="{{ path('consultant_remove', {'id': c.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
             </li>

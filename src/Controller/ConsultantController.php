@@ -16,27 +16,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class ConsultantController extends AbstractController
 {
     /**
+     * READ
+     * 
      * @Route("/consultant/{id}", name="app_consultant", requirements={"id"="\d+"})
      */
     public function index(int $id): Response
     {
-        if($id == 1) {
-            $consultant = (object) [
-                'username'=>"fatabien@gmail.com",
-                'nom'=>'Macip',
-                'prenom'=>'Fabien',
-                'id'=>38
-            ];
-        }
-        else {
-            $consultant = (object) [
-                'username'=>"tartanpion@yahoo.fr",
-                'nom'=>'DE TARASCON',
-                'prenom'=>'Tartarin',
-                'id'=>154
-            ];
-        }
-
+        $em = $this->getDoctrine()->getManager();
+        $consultant = $em->getRepository(User::class)->findOneBy(['id'=>$id, 'role'=>'consultant']);
 
         return $this->render('consultant/index.html.twig', [
             'consultant' => $consultant,
@@ -55,26 +42,6 @@ class ConsultantController extends AbstractController
     public function edit(User $consultant = null, Request $request): Response
     {
 
-                // Si la requête contient des données, donc ok pour création
-                /*         if($request->request->count() > 0) {
-                            $consultant = new User();
-                            $consultant->setNom($request->request->get('nom'))
-                                        ->setPrenom($request->request->get('prenom'))
-                                        ->setUsername($request->request->get('username'))
-                                        ->setPassword($request->request->get('password'))   
-                                        ->setRole($request->request->get('role'))
-                                        ->setRoles([]);
-                            //setCreatedAd(new \DateTime());
-
-                            $em = $this->getDoctrine()->getManager();
-
-                            $em->persist($consultant);
-                            $em->flush();
-
-                            return $this->redirectToRoute('consultants');
-                        }
-                */
-        
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un consultant
         $editMode = true;
 
@@ -83,6 +50,7 @@ class ConsultantController extends AbstractController
             $editMode = false;
         }
 
+        //$form = $this->createForm(UserType::class, $consultant);
         $form = $this->createFormBuilder($consultant)
                     ->add('nom')
                     ->add('prenom')
