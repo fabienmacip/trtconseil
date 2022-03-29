@@ -21,7 +21,7 @@
                 <li>
                     {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
                     {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
-                    <a href="{{ path('recruteur_bloquer', {'id': r.id}) }}">Bloquer</a> -
+                    <a href="{{ path('recruteur_valider', {'id': r.id}) }}">Bloquer</a> -
                     <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-danger">Modifier</a> - 
                     <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
                     
@@ -42,7 +42,7 @@
             <li>
                 {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
                 {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
-                <a href="{{ path('recruteur_valider', {'id': r.id}) }}">Valider</a> -
+                <a href="{{ path('recruteur_bloquer', {'id': r.id}) }}">Valider</a> -
                 <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-danger">Modifier</a> - 
                 <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
                 

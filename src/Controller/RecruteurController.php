@@ -36,22 +36,26 @@ class RecruteurController extends AbstractController
     public function role(Recruteur $recruteur = null, Request $request): Response
     {
             $em = $this->getDoctrine()->getManager();
-            $user = new User();
-            $user = $em->getRepository(User::class)->findOneBy(['id'=>$recruteur->getUser()->getId()]);
+            //$user = new User();
+            //$user = $em->getRepository(User::class)->findOneBy(['id'=>$recruteur->getUser()->getId()]);
             
+            $role = '';
+
             if($request->attributes->get('_route') === 'recruteur_bloquer')
             {
-                $user->setRole('recruteur_tovalid');
+              $role = 'recruteur_tovalid';
             }
             
             if($request->attributes->get('_route') === 'recruteur_valider')
             {
-                $user->setRole('recruteur');
+                $role = 'recruteur';
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            if($role !== '') {
+                $recruteur->getUser()->setRole($role);
+                $em->persist($recruteur);
+                $em->flush();
+            }
 
             return $this->redirectToRoute('recruteurs');
 
