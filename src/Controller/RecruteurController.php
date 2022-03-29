@@ -132,6 +132,8 @@ class RecruteurController extends AbstractController
         // Suppression de l'arbre
         $em->remove($recruteur);
         $em->flush();
+        $em->remove($recruteur->getUser());
+        $em->flush();
 
         return $this->redirectToRoute('recruteurs');
         

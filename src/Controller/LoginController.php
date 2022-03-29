@@ -26,6 +26,7 @@ class LoginController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        
     }
 
     /**
@@ -35,9 +36,10 @@ class LoginController extends AbstractController
     {
         //session_start();
         session_destroy();
-        //return $this->redirectToRoute('app_login'); 
+        return $this->redirectToRoute('login'); 
         //return  new RedirectResponse($this->urlGenerator->generate('login'));
-        return $this->redirectToRoute('app_login');
+        //return $this->redirectToRoute('app_login');
+        //return $this->render('security/login.html.twig', ['last_username' => '', 'error' => '']);
 
         //throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }

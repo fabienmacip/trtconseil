@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CandidatController!{% endblock %}
+{% block title %}Candidat 
+    {% if candidat %}
+        {{candidat.user.nom}}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
 <style>
@@ -8,13 +12,25 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h2>Candidat</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/src/Controller/CandidatController.php'|file_link(0) }}">src/Controller/CandidatController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/templates/candidat/index.html.twig'|file_link(0) }}">templates/candidat/index.html.twig</a></code></li>
-    </ul>
+<div>
+
+    {% if candidat %}
+        <div>CANDIDAT n°{{candidat.id}}</div>
+        <div>USER n°{{candidat.user.id}}</div>
+        <div>{{candidat.user.username|lower}}</div>
+        <div>{{candidat.user.nom|upper }}</div>
+        <div>{{candidat.user.prenom|capitalize}}</div>        
+        
+        <h3>CV</h3>
+        <div>{{candidat.getCv()}}</div>  
+       
+    {% else %}
+        <em>Données du candidat non trouvées.</em>
+    {% endif %}
+
 </div>
+<br/><br/>
+<a href="{{ path('candidats') }}" role="button" class="btn btn-danger">Retour à la liste des candidats</a>
 {% endblock %}
