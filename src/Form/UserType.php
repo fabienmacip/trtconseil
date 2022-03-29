@@ -14,22 +14,35 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('username',TextType::class, [
-                'label' => 'Username*',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne peut être vide'
-                    ])
+        if($options['role_only'] && $options['role_only'] === true) {
+            $builder
+            ->add('role', ChoiceType::class, [
+                'choices' => [
+                    'candidat' => 'candidat_tovalid',
+                    'recruteur' => 'recruteur_tovalid',
+                    'consultant' => 'consultant'
                 ]
-            ]
-            )
-            ->add('roles')
-            ->add('password')
-            ->add('nom')
-            ->add('prenom')
-            ->add('role')
-        ;
+            ]);
+        }
+        else {
+            $builder
+                ->add('username',TextType::class, [
+                    'label' => 'Username*',
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Ce champ ne peut être vide'
+                        ])
+                    ]
+                ]
+                )
+                ->add('roles')
+                ->add('password')
+                ->add('nom')
+                ->add('prenom')
+                ->add('role')
+            ;
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

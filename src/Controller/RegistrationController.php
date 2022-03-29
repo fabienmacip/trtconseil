@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Recruteur;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +36,19 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
+
+            // Si le nouvel utilisateur est un recruteur, alors il faut également créer une nouvelle
+            // entité RECRUTEUR
+            if($user->getRole() == "recruteur_tovalid") {
+                $recruteur = new Recruteur();
+                // On récupère l'id du User
+                $user_created = $entityManager->getRepository(User::class)->findOneBy(['role'=>'recruteur_tovalid', ],['id' => 'DESC'],1 );
+        
+                // On enregistre le recruteur
+                $recruteur->setUser($user_created);
+                $entityManager->persist($recruteur);
+                $entityManager->flush();
+            } // FIN si RECRUTEUR
 
             return $this->redirectToRoute('home');
         }

@@ -129,6 +129,17 @@ composer require easycorp/easyadmin-bundle
 php bin/console make:admin:dashboard  
 php bin/console make:admin:crud  
 
+
+# Intallation du FAKER (fausses données pour tests)
+composer require fzaninotto/faker --dev  
+Infos ici :  
+> https://github.com/fzaninotto/Faker  
+
+
+php bin/console doctrine:fixtures:load
+
+
+
 -------------------------------------------------------
 
 ### Ancien formulaire CONSULTANT

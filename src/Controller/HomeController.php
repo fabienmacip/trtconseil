@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Entity\Recruteur;
 
 class HomeController extends AbstractController
 {
@@ -35,6 +36,24 @@ class HomeController extends AbstractController
             'consultants' => $consultants,
         ]);
     }
+
+
+    /**
+     * @Route("/recruteurs", name="recruteurs")
+     */
+    public function allRecruteurs(): Response
+    {
+        // On récupère l'Entity Manager de Symfony
+        //---$this->doctrine;
+        $em = $this->getDoctrine()->getManager();
+        
+        $liste = $em->getRepository(Recruteur::class)->findAll();
+
+        return $this->render('recruteur/all.html.twig', [
+            'recruteurs' => $liste
+        ]); 
+    }
+
 
 } // FIN de la classe
 

@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RecruteurController!{% endblock %}
+{% dump recruteur %}
+
+
+{% block title %}Recruteur 
+    {% if recruteur %}
+        {{recruteur.user.nom}}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
 <style>
@@ -8,13 +15,28 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h2>Recruteur</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/src/Controller/RecruteurController.php'|file_link(0) }}">src/Controller/RecruteurController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/templates/recruteur/index.html.twig'|file_link(0) }}">templates/recruteur/index.html.twig</a></code></li>
-    </ul>
+<div>
+
+    {% if recruteur %}
+        <div>RECRUTEUR n°{{recruteur.id}}</div>
+        <div>USER n°{{recruteur.user.id}}</div>
+        <div>{{recruteur.user.username|lower}}</div>
+        <div>{{recruteur.user.nom|upper }}</div>
+        <div>{{recruteur.user.prenom|capitalize}}</div>        
+        
+        <h3>ENTREPRISE</h3>
+        <div>{{recruteur.getEntrepriseAdresse()|capitalize}}</div>  
+        <div>{{recruteur.getEntrepriseNom()|capitalize}}</div>  
+        <div>{{recruteur.getEntrepriseCodePostal()}}</div>  
+        <div>{{recruteur.getEntrepriseVille()|upper}}</div>   
+       
+    {% else %}
+        <em>Données du recruteur non trouvées.</em>
+    {% endif %}
+
 </div>
+<br/><br/>
+<a href="{{ path('recruteurs') }}" role="button" class="btn btn-danger">Retour à la liste des recruteurs</a>
 {% endblock %}

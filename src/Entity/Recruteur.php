@@ -48,8 +48,6 @@ class Recruteur
      */
     private $consultant;
 
-
-
     public function getId(): ?int
     {
         return $this->id;

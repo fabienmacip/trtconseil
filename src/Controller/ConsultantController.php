@@ -34,7 +34,7 @@ class ConsultantController extends AbstractController
 
 
     /**
-     * CREATE
+     * CREATE or UPDATE
      * 
      * @Route("/consultant/create/", name="consultant_create")
      * @Route("/consultant/update/{id}", name="consultant_update", requirements={"id"="\d+"})
@@ -83,10 +83,6 @@ class ConsultantController extends AbstractController
 
 
     } // FIN function create
-
-
-
-
 
 
     /**
