@@ -61,10 +61,14 @@ DATABASE_URL="mysql://root:@127.0.0.1:3306/trtconseil?serverVersion=5.7&charset=
 
 # Commandes utilisés
 symfony new --full trtconseil
+
+php bin/console doctrine:database:create
+
 php bin/console make:entity
 php bin/console make:user
-php bin/console doctrine:database:create
+
 php bin/console make:migration
+php bin/console doctrine:migrations:migrate
 ### MAJ BDD
 php bin/console doctrine:schema:update --force
 
@@ -130,13 +134,18 @@ php bin/console make:admin:dashboard
 php bin/console make:admin:crud  
 
 
-# Intallation du FAKER (fausses données pour tests)
+# FIXTURES - Intallation du FAKER (fausses données pour tests)
+
+composer require orm-fixtures --dev  
+php bin/console make:fixtures  
+php bin/console doctrine:fixtures:load
+
+## Bibliothèque de fixtures
 composer require fzaninotto/faker --dev  
 Infos ici :  
 > https://github.com/fzaninotto/Faker  
 
 
-php bin/console doctrine:fixtures:load
 
 
 
