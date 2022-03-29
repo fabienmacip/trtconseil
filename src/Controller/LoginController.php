@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class LoginController extends AbstractController
 {
@@ -29,8 +31,14 @@ class LoginController extends AbstractController
     /**
      * @Route("/logout", name="app_logout")
      */
-    public function logout(): void
+    public function logout(): Response
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        //session_start();
+        session_destroy();
+        //return $this->redirectToRoute('app_login'); 
+        //return  new RedirectResponse($this->urlGenerator->generate('login'));
+        return $this->redirectToRoute('app_login');
+
+        //throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
