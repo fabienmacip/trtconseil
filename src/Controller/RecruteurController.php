@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recruteur;
+use App\Entity\User;
 
 class RecruteurController extends AbstractController
 {
@@ -26,6 +27,39 @@ class RecruteurController extends AbstractController
     }
 
    
+    /**
+     * UPDATE role (recruteur_tovalid / recruteur)
+     * 
+     * @Route("/recruteur/valider/{id}", name="recruteur_valider", requirements={"id"="\d+"})
+     * @Route("/recruteur/bloquer/{id}", name="recruteur_bloquer", requirements={"id"="\d+"})
+     */
+    public function role(Recruteur $recruteur = null, Request $request): Response
+    {
+            $em = $this->getDoctrine()->getManager();
+            $user = new User();
+            $user = $em->getRepository(User::class)->findOneBy(['id'=>$recruteur->getUser()->getId()]);
+            
+            if($request->attributes->get('_route') === 'recruteur_bloquer')
+            {
+                $user->setRole('recruteur_tovalid');
+            }
+            
+            if($request->attributes->get('_route') === 'recruteur_valider')
+            {
+                $user->setRole('recruteur');
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('recruteurs');
+
+        } // FIN function VALIDER ou BLOQUER
+
+
+
+
 
     /**
      * CREATE or UPDATE

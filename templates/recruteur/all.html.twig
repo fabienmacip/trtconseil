@@ -10,6 +10,7 @@
     ul { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
+
 <div class="example-wrapper">
     <h1>Liste des recruteurs à valider</h1>
     <ul>
@@ -17,10 +18,13 @@
             {# Liste des recruteurs à valider #}
             {% if r.user.role is same as 'recruteur_tovalid' %}
 
-                <li>{{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
-                    <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> - 
+                <li>
+                    {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
+                    {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
+                    <a href="{{ path('recruteur_bloquer', {'id': r.id}) }}">Bloquer</a> -
                     <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-danger">Modifier</a> - 
                     <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                    
                 </li>
             {% endif %}
         {% else %}
@@ -35,10 +39,13 @@
         {%for r in recruteurs %}
             {# Liste des recruteurs déjà validés #}
             {% if r.user.role is same as 'recruteur' %}
-            <li>{{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
-                <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> - 
+            <li>
+                {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
+                {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
+                <a href="{{ path('recruteur_valider', {'id': r.id}) }}">Valider</a> -
                 <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-danger">Modifier</a> - 
                 <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                
             </li>
             {% endif %}
         {% else %}
