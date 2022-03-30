@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recruteur{% endblock %}
+
+{% form_theme formRecruteur 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+
+<h1>Gestion d'un recruteur</h1>
+
+{{ form_start(formRecruteur) }}
+
+{{ form_row(formRecruteur.nom, {'attr' : { 'placeholder' : 'nom', 'readonly' : 'true'}}) }}
+{{ form_row(formRecruteur.prenom, {'attr' : { 'placeholder' : 'prénom', 'readonly' : 'true'}}) }}
+{{ form_row(formRecruteur.username, {'attr' : { 'placeholder' : 'mail', 'readonly' : 'true'}}) }}
+{{ form_row(formRecruteur.password, {'type' : 'password', 'readonly' : 'true'}) }}
+{{ form_row(formRecruteur.role, {'type' : 'options', 'attr' : { 'placeholder' : 'role'}}) }}
+
+<input type="hidden" name="roles" placeholder="roles" value="[]"/>
+<button type="submit">
+        Enregistrer les modifications
+</button>
+
+{{ form_end(formRecruteur) }}
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .container{
+            width: 100%;
+            border: 1px solid #ddd;
+            padding-top: 13px;
+            border-radius: 10px;
+            background-color: #F9F9FA;
+            color: #413C49;
+            margin-top: 20px;
+            padding-bottom: 13px;
+        }
+
+        .error{
+            color: red;
+            font-weight: 600;
+        }
+
+        .has-error ul{
+            color: red;
+            list-style-type: none;
+            padding-left: 0;
+            padding-top: 5px;
+            font-style: italic;
+        }
+
+        .btn-lg{
+            color: #fff;
+            margin: auto;
+            margin-top: 30px;
+        }
+    </style>
+{% endblock %}

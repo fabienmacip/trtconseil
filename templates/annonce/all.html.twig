@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des annonces{% endblock %}
+
+
+
+{% block body %}
+<style>
+    {# .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; } #}
+    
+    .validated { background-color : green; }
+    .locked { background-color : red; }
+</style>
+
+
+<div class="example-wrapper locked">
+    <h1>Liste des annonces à valider</h1>
+    <ul>
+        {%for r in annonces %}
+        
+            {# Liste des annonces à valider #}
+            {% if r.validation is same as false %}
+
+                <li>
+                    <a href="{{ path('app_annonce', {'id': r.id})}}">Voir</a> 
+                    {{ r.intitule|capitalize }} {{r.poste|capitalize}} {{r.ville|upper}}
+                    {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
+                    <a href="{{ path('annonce_valider', {'id': r.id}) }}">Valider</a> -
+                    <a href="{{ path('annonce_update', {'id': r.id}) }}" role="button" class="btn btn-danger">Modifier</a> - 
+                    <a href="{{ path('annonce_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                    
+                </li>
+            {% endif %}
+        {% else %}
+            <li><em>Aucune annonce trouvée.</em></li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="example-wrapper validated">
+    <h1>Liste des annonces validées</h1>
+    <ul>
+        {%for r in annonces %}
+            {# Liste des annonces déjà validées #}
+            {% if r.validation is same as true %}
+            <li>
+                <a href="{{ path('app_annonce', {'id': r.id})}}">Voir</a> 
+                {{ r.intitule|capitalize }} {{r.poste|capitalize}} {{r.ville|upper}}
+                {# <a href="{{ path('app_annonce', {'id': r.id}) }}">Détail</a> -  #}
+                <a href="{{ path('annonce_bloquer', {'id': r.id}) }}">Bloquer</a> -
+                <a href="{{ path('annonce_update', {'id': r.id}) }}" role="button" class="btn btn-danger">Modifier</a> - 
+                <a href="{{ path('annonce_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                
+            </li>
+            {% endif %}
+        {% else %}
+            <li><em>Aucune annonce trouvée.</em></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
