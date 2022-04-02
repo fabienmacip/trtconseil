@@ -116,6 +116,12 @@ class Annonce
         return $this->date;
     }
 
+    public function getDateString(): string
+    {
+        /* return $this->date->format('Y-m-d H:i:s'); */
+        return $this->date->format('d-M-Y');
+    }
+
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;

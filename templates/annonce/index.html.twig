@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AnnonceController!{% endblock %}
+{% block title %}Annonce 
+    {% if annonce %}
+        {{annonce.intitule}}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
 <style>
@@ -8,13 +12,32 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h2>Annonce</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/src/Controller/AnnonceController.php'|file_link(0) }}">src/Controller/AnnonceController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp-production/htdocs/trtconseil/templates/annonce/index.html.twig'|file_link(0) }}">templates/annonce/index.html.twig</a></code></li>
-    </ul>
+<div>
+
+    {% if annonce %}
+        <div class="alert alert-dismissible alert-primary">
+            <div>ANNONCE n°{{annonce.id}}</div>
+            <div>TITRE : {{annonce.intitule}}</div>
+            <div>POSTE : {{annonce.poste|upper}}</div>
+            <div>LIEU : {{annonce.ville|capitalize }}</div>
+            <div>DATE : {{annonce.getDateString()}}</div> 
+        </div>
+        <div class="alert alert-dismissible alert-secondary">DESCRIPTION<br/>{{annonce.description}}</div>        
+        
+        <h3>RECRUTEUR</h3>
+        <div class="alert alert-dismissible alert-light">
+            <div>{{annonce.getRecruteur().getEntrepriseNom()|capitalize}}</div>  
+            <div>{{annonce.getRecruteur().getEntrepriseCodePostal()}}</div>  
+            <div>{{annonce.getRecruteur().getEntrepriseVille()|upper}}</div>   
+        </div>
+       
+    {% else %}
+        <em>Données de l'annonce non trouvées.</em>
+    {% endif %}
+
 </div>
+<br/><br/>
+<a href="{{ path('annonces') }}" role="button" class="btn btn-dark">Retour à la liste des annonces</a>
 {% endblock %}
