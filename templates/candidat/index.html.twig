@@ -32,5 +32,14 @@
 
 </div>
 <br/><br/>
+
+{# Bouton retour sur l'annonce (pour le recruteur) #}
+<div>
+{% if annonce %}
+<a href="{{ path('app_annonce', {'id': annonce}) }}" role="button" class="btn btn-dark mx-2">Retour à l'annonce</a>
+{% endif %}
+
+{# Bouton retour à la liste des candidats #}
 <a href="{{ path('candidats') }}" role="button" class="btn btn-dark">Retour à la liste des candidats</a>
+</div>
 {% endblock %}

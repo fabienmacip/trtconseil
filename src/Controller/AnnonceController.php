@@ -20,8 +20,11 @@ class AnnonceController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $annonce = $em->getRepository(Annonce::class)->findOneBy(['id'=>$id]);
 
+        $candidatures = $em->getRepository(Candidature::class)->findBy(['annonce' => $annonce]);
+
         return $this->render('annonce/index.html.twig', [
             'annonce' => $annonce,
+            'candidatures' => $candidatures
         ]);
     }
 

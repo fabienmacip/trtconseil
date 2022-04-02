@@ -38,6 +38,31 @@
     {% endif %}
 
 </div>
+
 <br/><br/>
+
+{# Liste des candidats à cette annonce #}
+<div>
+    <ul>
+    {% if candidatures %}
+        {% for c in candidatures %}
+        <li style="list-style:none" class="my-1">
+            <a href="{{ path('app_candidat_annonce', {'id': c.candidat.id, 'annonce':c.annonce.id})}}" class="btn btn-info mx-2">Voir</a> 
+            {{c.candidat.user.nom}} - 
+            {{c.candidat.user.prenom}} - 
+            {{c.candidat.user.username}} - 
+            {{c.candidat.cv}}
+        </li>
+        {% endfor %}
+
+    {% else %}
+    <li><em>Aucune annonce trouvée.</em></li>
+    {% endif %}
+    <ul>
+</div>
+
+{# Bouton retour #}
+<div>
 <a href="{{ path('annonces') }}" role="button" class="btn btn-dark">Retour à la liste des annonces</a>
+</div>
 {% endblock %}

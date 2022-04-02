@@ -15,14 +15,16 @@ class CandidatController extends AbstractController
      * READ
      * 
      * @Route("/candidat/{id}", name="app_candidat", requirements={"id"="\d+"})
+     * @Route("/candidat/{id}/{annonce}", name="app_candidat_annonce", requirements={"id"="\d+"})
      */
-    public function index(int $id): Response
+    public function index(int $id, int $annonce = null): Response
     {
         $em = $this->getDoctrine()->getManager();
         $candidat = $em->getRepository(Candidat::class)->findOneBy(['id'=>$id]);
 
         return $this->render('candidat/index.html.twig', [
             'candidat' => $candidat,
+            'annonce' => $annonce
         ]);
     }
 
