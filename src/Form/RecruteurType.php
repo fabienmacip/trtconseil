@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Recruteur;
+use App\Form\UserType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class RecruteurType extends AbstractType
 {
@@ -16,7 +19,7 @@ class RecruteurType extends AbstractType
             ->add('entreprise_adresse')
             ->add('entreprise_code_postal')
             ->add('entreprise_ville')
-            ->add('user')
+            ->add('user', UserType::class)
             ->add('consultant')
         ;
     }

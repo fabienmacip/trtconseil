@@ -7,7 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recruteur;
-use App\Entity\User;
+use App\Form\RecruteurType;
+/* use App\Form\UserType;
+use App\Entity\User; */
+
 
 class RecruteurController extends AbstractController
 {
@@ -82,14 +85,15 @@ class RecruteurController extends AbstractController
             $editMode = false;
         }
 
-        //$form = $this->createForm(UserType::class, $recruteur);
-        $form = $this->createFormBuilder($recruteur)
-                    ->add('nom')
-                    ->add('prenom')
-                    ->add('username')
-                    ->add('password')
-                    ->add('role')
-                    ->getForm();
+        
+         $form = $this->createForm(RecruteurType::class, $recruteur); 
+         /* $form = $this->createFormBuilder($recruteur)
+                    ->add('entreprise_nom')
+                    ->add('entreprise_adresse')
+                    ->add('entreprise_code_postal')
+                    ->add('entreprise_ville')
+                    ->add('user')
+                    ->getForm();  */
 
         $form->handleRequest($request);
 

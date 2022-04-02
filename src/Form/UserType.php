@@ -14,7 +14,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if($options['role_only'] && $options['role_only'] === true) {
+        /* if($options['role_only'] && $options['role_only'] === true) {
             $builder
             ->add('role', ChoiceType::class, [
                 'choices' => [
@@ -24,7 +24,7 @@ class UserType extends AbstractType
                 ]
             ]);
         }
-        else {
+        else { */
             $builder
                 ->add('username',TextType::class, [
                     'label' => 'Username*',
@@ -41,7 +41,7 @@ class UserType extends AbstractType
                 ->add('prenom')
                 ->add('role')
             ;
-        }
+        /* } */
 
     }
 

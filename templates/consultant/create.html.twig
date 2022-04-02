@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
-
-
-
 {% block title %}Consultant{% endblock %}
 
 {% form_theme formConsultant 'bootstrap_5_layout.html.twig' %}
@@ -21,7 +17,8 @@
 {{ form_row(formConsultant.role, {'attr' : { 'placeholder' : 'role', 'value' : 'consultant', 'readonly' : 'true'}}) }}
 
 <input type="hidden" name="roles" placeholder="roles" value="[]"/>
-<button type="submit">
+<a href="/consultants" role="button" class="btn btn-dark">Retour à la liste des consultants</a>
+<button type="submit" class="btn btn-primary">
     {% if editMode %}
         Enregistrer les modifications
     {% else %}

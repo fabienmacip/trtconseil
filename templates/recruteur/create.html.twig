@@ -10,14 +10,18 @@
 
 {{ form_start(formRecruteur) }}
 
-{{ form_row(formRecruteur.nom, {'attr' : { 'placeholder' : 'nom', 'readonly' : 'true'}}) }}
-{{ form_row(formRecruteur.prenom, {'attr' : { 'placeholder' : 'prénom', 'readonly' : 'true'}}) }}
+{{ form_row(formRecruteur.entreprise_nom, {'attr' : { 'placeholder' : 'nom de l\'entreprise'}}) }}
+{{ form_row(formRecruteur.entreprise_adresse, {'attr' : { 'placeholder' : 'adresse'}}) }}
+{{ form_row(formRecruteur.entreprise_code_postal, {'attr' : { 'placeholder' : 'code postal (5 chiffres)'}}) }}
+{{ form_row(formRecruteur.entreprise_ville, {'attr' : { 'placeholder' : 'ville'}}) }}
+ {# {{ form_row(formRecruteur.user.nom, {'attr' : { 'placeholder' : 'nom'}}) }} #}
+{#{{ form_row(formRecruteur.prenom, {'attr' : { 'placeholder' : 'prénom', 'readonly' : 'true'}}) }}
 {{ form_row(formRecruteur.username, {'attr' : { 'placeholder' : 'mail', 'readonly' : 'true'}}) }}
 {{ form_row(formRecruteur.password, {'type' : 'password', 'readonly' : 'true'}) }}
-{{ form_row(formRecruteur.role, {'type' : 'options', 'attr' : { 'placeholder' : 'role'}}) }}
+{{ form_row(formRecruteur.role, {'type' : 'options', 'attr' : { 'placeholder' : 'role'}}) }} #}
 
 <input type="hidden" name="roles" placeholder="roles" value="[]"/>
-<button type="submit">
+<button type="submit" class="btn btn-primary">
         Enregistrer les modifications
 </button>
 
