@@ -42,9 +42,10 @@
 <br/><br/>
 
 {# Liste des candidats à cette annonce #}
+{# A ne pas afficher si on est candidat #}
 <div>
     <ul>
-    {% if candidatures %}
+    {% if candidatures is defined %}
         {% for c in candidatures %}
         <li style="list-style:none" class="my-1">
             <a href="{{ path('app_candidat_annonce', {'id': c.candidat.id, 'annonce':c.annonce.id})}}" class="btn btn-info mx-2">Voir</a> 
@@ -56,13 +57,38 @@
         {% endfor %}
 
     {% else %}
-    <li><em>Aucune annonce trouvée.</em></li>
+    <li><em>Aucune candidature trouvée.</em></li>
     {% endif %}
     <ul>
 </div>
 
+
+{# {{ dump(candidat)}}
+{{ dump(candidatures)}} #}
+{# Bouton POSTULER #}
+{# Afficher que si on est candidat #}
+{% if candidat is defined %}
+{# Si le candidat n'a pas déjà postulé #}
+    {% if candidatures is defined %}
+        {% set dejapostule = false %}
+        {% for k in candidatures %}
+            {% if k.candidat.id is same as candidat.id %}
+                {% set dejapostule = true %}
+            {% endif %}
+        {% endfor %}
+    {% if dejapostule is same as false %}
+        <div>
+            <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': candidat.id})}}" role="button" class="btn btn-success">Postuler</a>
+        </div>
+    {% endif %}
+    {% endif %}
+{% endif %}
+
+
+
 {# Bouton retour #}
-<div>
+<div class="mt-3">
 <a href="{{ path('annonces') }}" role="button" class="btn btn-dark">Retour à la liste des annonces</a>
 </div>
+<div class="my-5"></div>
 {% endblock %}

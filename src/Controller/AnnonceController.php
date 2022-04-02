@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Annonce;
 use App\Entity\Candidature;
+use App\Entity\Candidat;
 class AnnonceController extends AbstractController
 {
     /**
@@ -22,9 +23,14 @@ class AnnonceController extends AbstractController
 
         $candidatures = $em->getRepository(Candidature::class)->findBy(['annonce' => $annonce]);
 
+        /* Ajout d'un candidat fictif pour pouvoir tester le bouton POSTULER A UNE ANNONCE */
+        $candidatFictif = $em->getRepository(Candidat::class)->find('37');
+//        $candidatFictif = $candidats[0];
+
         return $this->render('annonce/index.html.twig', [
             'annonce' => $annonce,
-            'candidatures' => $candidatures
+            'candidatures' => $candidatures,
+            'candidat' => $candidatFictif,
         ]);
     }
 
