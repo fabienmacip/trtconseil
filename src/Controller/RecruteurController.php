@@ -7,7 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recruteur;
+use App\Entity\User;
 use App\Form\RecruteurType;
+use App\Form\UserType;
+
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+
 /* use App\Form\UserType;
 use App\Entity\User; */
 
@@ -74,8 +80,10 @@ class RecruteurController extends AbstractController
      * @Route("/recruteur/update/{id}", name="recruteur_update", requirements={"id"="\d+"})
      * @Route("/recruteur/create/", name="recruteur_create")
      */
-    public function edit(Recruteur $recruteur = null, Request $request): Response
+    public function edit(Recruteur $recruteur = null, User $user = null, Request $request): Response
     {
+
+        $em = $this->getDoctrine()->getManager();
 
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un recruteur
         $editMode = true;
@@ -84,26 +92,53 @@ class RecruteurController extends AbstractController
             $recruteur = new Recruteur();
             $editMode = false;
         }
-
         
-         $form = $this->createForm(RecruteurType::class, $recruteur); 
-         /* $form = $this->createFormBuilder($recruteur)
+        if(!$user) {
+            $user = $em->getRepository(User::class)->findOneBy(['id'=>$recruteur->getUser()->getId()]);
+            $editMode = false;
+        } 
+        
+        if($request->request->get('formUser')) {
+            $user->setNom($request->request->get('formUser')['nom']);
+            $user->setPrenom($request->request->get('formUser')['prenom']);
+            $user->setUsername($request->request->get('formUser')['username']);
+            $user->setPassword($request->request->get('formUser')['password']);
+            $user->setRole($request->request->get('formUser')['role']);
+            
+        }
+        
+        $recruteur->setUser($user);
+
+        // Champs du formulaire, partie USER
+        $formUser = $this->createForm(UserType::class, $user);
+        /* var_dump($formUser); */
+        
+        $formUser = $this->get('form.factory')->createNamedBuilder('formUser',UserType::class, $user)
+        /* $formUser = $this->formFactory->createNamed('formUser', UserType::class, $user) */
+        /* $formUser = $this->createFormBuilder($user) */
+                    /* ->add('nom')
+                    ->add('prenom')
+                    ->add('username')
+                    ->add('password')
+                    ->add('role') */
+                    ->getForm();
+                    
+        
+                
+        // Champs du formulaire RECRUTEUR
+         //$form = $this->createForm(RecruteurType::class, $recruteur); 
+         $form = $this->createFormBuilder($recruteur)
                     ->add('entreprise_nom')
                     ->add('entreprise_adresse')
                     ->add('entreprise_code_postal')
                     ->add('entreprise_ville')
-                    ->add('user')
-                    ->getForm();  */
+                    //->add('user')
+                    ->getForm();
 
         $form->handleRequest($request);
+        $formUser->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            // Si le recruteur n'existe pas encore, on met une date de création.
-            /* if(!$recruteur->getId()){
-                $recruteur->setCreatedAt(new \DateTime());
-            } */
-
-            $em = $this->getDoctrine()->getManager();
             $em->persist($recruteur);
             $em->flush();
 
@@ -111,8 +146,22 @@ class RecruteurController extends AbstractController
             //return $this->render('recruteur', ['id' => $recruteur->getId()]);
         }
 
+        if($formUser->isSubmitted() && $formUser->isValid()) {
+            var_dump("valide user");
+                $em->persist($user);
+                $em->flush();
+    
+                return $this->redirectToRoute('recruteurs');
+                //return $this->render('recruteur', ['id' => $recruteur->getId()]);
+            } else if (!$formUser->isSubmitted()) {
+                var_dump("pas soumis");
+            }
+    
+
+
         return $this->render('recruteur/create.html.twig',[
             'formRecruteur' => $form->createView(),
+            'formUser' => $formUser->createView(),
             'editMode' => $editMode
         ]);
 

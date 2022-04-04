@@ -7,28 +7,43 @@
 {% block body %}
 
 <h1>Gestion d'un recruteur</h1>
-
+<h2>Données de l'entreprise</h2>
 {{ form_start(formRecruteur) }}
+    {{ form_errors(formRecruteur) }}
 
-{{ form_row(formRecruteur.entreprise_nom, {'attr' : { 'placeholder' : 'nom de l\'entreprise'}}) }}
-{{ form_row(formRecruteur.entreprise_adresse, {'attr' : { 'placeholder' : 'adresse'}}) }}
-{{ form_row(formRecruteur.entreprise_code_postal, {'attr' : { 'placeholder' : 'code postal (5 chiffres)'}}) }}
-{{ form_row(formRecruteur.entreprise_ville, {'attr' : { 'placeholder' : 'ville'}}) }}
- {# {{ form_row(formRecruteur.user.nom, {'attr' : { 'placeholder' : 'nom'}}) }} #}
-{#{{ form_row(formRecruteur.prenom, {'attr' : { 'placeholder' : 'prénom', 'readonly' : 'true'}}) }}
-{{ form_row(formRecruteur.username, {'attr' : { 'placeholder' : 'mail', 'readonly' : 'true'}}) }}
-{{ form_row(formRecruteur.password, {'type' : 'password', 'readonly' : 'true'}) }}
-{{ form_row(formRecruteur.role, {'type' : 'options', 'attr' : { 'placeholder' : 'role'}}) }} #}
+    {{ form_row(formRecruteur.entreprise_nom, {'attr' : { 'placeholder' : 'nom de l\'entreprise', 'minlength':'3'}}) }}
+    {{ form_row(formRecruteur.entreprise_adresse, {'attr' : { 'placeholder' : 'adresse'}}) }}
+    {{ form_row(formRecruteur.entreprise_code_postal, {'attr' : { 'placeholder' : 'code postal (5 chiffres)'}}) }}
+    {{ form_row(formRecruteur.entreprise_ville, {'attr' : { 'placeholder' : 'ville'}}) }}
 
-<input type="hidden" name="roles" placeholder="roles" value="[]"/>
-<button type="submit" class="btn btn-primary">
-        Enregistrer les modifications
-</button>
-
+    <button type="submit" class="btn btn-primary">
+            Enregistrer les modifications
+    </button>
 {{ form_end(formRecruteur) }}
 
+{# ---------------------------------------------------------------- #}
+{# -----------------  FORMULAIRE USER  --------------------------- #}
+<h2 class="my-2">Données personnelles</h2>
+  {{ form_start(formUser) }} 
+{# <form name="formUser" method="post">  #}
+    {{ form_errors(formUser) }}
+
+    {{ form_row(formUser.nom, {'attr' : { 'placeholder' : 'nom'}}) }}
+    {{ form_row(formUser.prenom, {'attr' : { 'placeholder' : 'prenom'}}) }}
+    {{ form_row(formUser.username, {'attr' : { 'placeholder' : 'mail'}}) }}
+    {{ form_row(formUser.password, {'type' : 'password'}) }}
+    {{ form_row(formUser.role, {'type': 'hidden', 'label': false, 'attr' : { 'placeholder' : 'role', 'readonly' : 'true'}}) }}
+    
+
+    {# <input type="hidden" name="roles" placeholder="roles" value="[]"/> #}
+    <button type="submit" class="btn btn-primary">
+        Enregistrer les modifications
+    </button>
 
 
+{# </form> #}
+{{ form_end(formUser) }} 
+<div class="my-5">&nbsp;</div>
 {% endblock %}
 
 {% block stylesheets %}

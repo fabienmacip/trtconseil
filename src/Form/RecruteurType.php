@@ -19,7 +19,7 @@ class RecruteurType extends AbstractType
             ->add('entreprise_adresse')
             ->add('entreprise_code_postal')
             ->add('entreprise_ville')
-            ->add('user', UserType::class)
+            //->add('user', UserType::class)
             ->add('consultant')
         ;
     }
@@ -28,6 +28,9 @@ class RecruteurType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Recruteur::class,
+            'allow_extra_fields' => true,
+            'extra_fields' => 'nom, prenom',
+            'allow_add' => true, 
         ]);
     }
 }
