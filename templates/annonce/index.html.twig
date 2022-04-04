@@ -67,22 +67,24 @@
 {# {{ dump(candidat)}}
 {{ dump(candidatures)}} #}
 {# Bouton POSTULER #}
+{% set dejapostule = false %}
 {# Afficher que si on est candidat #}
-{% if candidat is defined %}
+{% if candidat is not null %}
 {# Si le candidat n'a pas déjà postulé #}
-    {% if candidatures is defined %}
-        {% set dejapostule = false %}
+    {% if candidatures is not null %}
+    
         {% for k in candidatures %}
-            {% if k.candidat.id is same as candidat.id %}
+
+            {% if k.candidat.id and k.candidat.id is same as candidat.id %}
                 {% set dejapostule = true %}
             {% endif %}
         {% endfor %}
-    {% if dejapostule is same as false %}
-        <div>
-            <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': candidat.id})}}" role="button" class="btn btn-success">Postuler</a>
-        </div>
     {% endif %}
-    {% endif %}
+{% endif %}
+{% if dejapostule is same as false %}
+    <div>{# candidat.id #}
+        <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': '61'})}}" role="button" class="btn btn-success">Postuler</a>
+    </div>
 {% endif %}
 
 

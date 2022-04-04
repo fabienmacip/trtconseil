@@ -11,6 +11,7 @@ use App\Entity\Candidat;
 use App\Entity\Annonce;
 use App\Entity\Candidature;
 
+
 //use Faker\Factory;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -36,7 +37,7 @@ class AppFixtures extends Fixture
 
 
         // ********** CONSULTANTS (USERS)
-        for($i = 1; $i <= 10; $i++) {
+        for($i = 1; $i <= 15; $i++) {
             $user = new User();
             $user->setUsername($faker->email)
                 ->setPassword($faker->password)
@@ -102,4 +103,5 @@ class AppFixtures extends Fixture
 
         $manager->flush();
     }
+
 }
