@@ -24,7 +24,12 @@
         <div>{{candidat.user.prenom|capitalize}}</div>        
         
         <h3>CV</h3>
-        <div>{{candidat.getCv()}}</div>  
+        {# <div>{{candidat.getCv()}}</div>   #}
+        {% if candidat.cv is not empty %}
+        <a href="{{ asset('uploads/cv/' ~ candidat.cv) }}" target="_blank">Voir le CV (PDF)</a>
+        {% else %}
+        pas de cv
+        {% endif %}
        
     {% else %}
         <em>Données du candidat non trouvées.</em>

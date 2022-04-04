@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidat{% endblock %}
+
+
+{% block body %}
+{# <script type="text/javascript" src="{{ asset('js/candidatScript.js') }}"></script> #}
+
+<h1>Gestion d'un candidat</h1>
+
+{# ---------------------------------------------------------------- #}
+{# -----------------  FORMULAIRE USER  --------------------------- #}
+<h2 class="my-2">Données personnelles</h2>
+  {{ form_start(formUser) }} 
+{# <form name="formUser" method="post">  #}
+    {{ form_errors(formUser) }}
+
+    {{ form_row(formUser.nom, {'attr' : { 'placeholder' : 'nom', 'class':'utilisateur'}}) }}
+    {{ form_row(formUser.prenom, {'attr' : { 'placeholder' : 'prenom', 'class':'utilisateur'}}) }}
+    {{ form_row(formUser.username, {'attr' : { 'placeholder' : 'mail', 'class':'utilisateur'}}) }}
+    {{ form_row(formUser.password, {'type' : 'password', 'attr':{'class':'utilisateur'}}) }}
+    {{ form_row(formUser.role, {'type': 'hidden', 'label': false, 'attr' : { 'placeholder' : 'role', 'readonly' : 'true'}}) }}
+    
+
+    {# <input type="hidden" name="roles" placeholder="roles" value="[]"/> #}
+    <button type="submit" class="btn btn-primary utilisateur">
+        Enregistrer les modifications
+    </button>
+    
+
+{# </form> #}
+{{ form_end(formUser) }} 
+
+{# ------------ CV ---------------- #}
+<h2>CV</h2>
+{{ form_start(formCandidat) }}
+    {{ form_errors(formCandidat) }}
+
+    {{ form_row(formCandidat.cv, {'attr' : { 'placeholder' : 'cv', 'class':'candidat'}}) }}
+
+    <button type="submit" class="btn btn-primary candidat">
+            Enregistrer le CV
+    </button>
+    <a href="{{ path('candidats') }}" role="button" class="btn btn-dark mx-2">Retour à la liste des candidats</a>
+{{ form_end(formCandidat) }}
+
+<div class="my-5">&nbsp;</div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+
+        .container{
+            width: 100%;
+            border: 1px solid #ddd;
+            padding-top: 13px;
+            border-radius: 10px;
+            background-color: #F9F9FA;
+            color: #413C49;
+            margin-top: 20px;
+            padding-bottom: 13px;
+        }
+
+        .error{
+            color: red;
+            font-weight: 600;
+        }
+
+        .has-error ul{
+            color: red;
+            list-style-type: none;
+            padding-left: 0;
+            padding-top: 5px;
+            font-style: italic;
+        }
+
+        .btn-lg{
+            color: #fff;
+            margin: auto;
+            margin-top: 30px;
+        }
+    </style>
+{% endblock %}
