@@ -108,7 +108,8 @@ class CandidatController extends AbstractController
         if($candidat->getCv() !== null){
             
             $candidat->setCv(
-                new File($this->getParameter('cv_directory').'/'.$candidat->getCv())
+                /* new File($this->getParameter('cv_directory').'/'.$candidat->getCv()) */
+                ($candidat->getCv())
             );
         }
         

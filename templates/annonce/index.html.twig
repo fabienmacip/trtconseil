@@ -26,7 +26,7 @@
         </div>
         <div class="alert alert-dismissible alert-secondary">DESCRIPTION<br/>{{annonce.description}}</div>        
         
-        <h3>RECRUTEUR</h3>
+        <h3>Recruteur</h3>
         <div class="alert alert-dismissible alert-light">
             <div>{{annonce.getRecruteur().getEntrepriseNom()|capitalize}}</div>  
             <div>{{annonce.getRecruteur().getEntrepriseCodePostal()}}</div>  
@@ -39,11 +39,12 @@
 
 </div>
 
-<br/><br/>
+<br/>
 
 {# Liste des candidats à cette annonce #}
 {# A ne pas afficher si on est candidat #}
-<div>
+<h3>Candidatures</h3>
+<div class="alert alert-dismissible alert-light">
     <ul>
     {% if candidatures is defined %}
         {% for c in candidatures %}

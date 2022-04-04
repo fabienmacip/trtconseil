@@ -23,7 +23,14 @@
 
                 <li class="mb-1">
                     <a href="{{ path('app_candidat', {'id': r.id})}}" class="btn btn-info">Voir</a> 
-                    {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
+                    {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}} 
+                    {% if r.cv is not empty %}
+                    <a href={{ asset('uploads/cv/' ~ r.cv) }} target="_blank" class="icon-link">
+                        <img src={{ asset('icons/cv.png')}} title="CV" alt="cv" class="icon"/>
+                    </a>
+                    {% else %}
+                        <img src={{ asset('icons/no-cv.png')}} title="pas de cv" alt="pas de cv" class="icon" />
+                    {% endif %}
                     <a href="{{ path('candidat_valider', {'id': r.id}) }}" class="btn btn-warning">Valider</a> -
                     <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
                     <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger"
@@ -46,6 +53,13 @@
             <li class="mb-1">
                 <a href="{{ path('app_candidat', {'id': r.id})}}" class="btn btn-info">Voir</a> 
                 {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
+                {% if r.cv is not empty %}
+                <a href={{ asset('uploads/cv/' ~ r.cv) }} target="_blank" class="icon-link">
+                    <img src={{ asset('icons/cv.png')}} title="CV" alt="cv" class="icon"/>
+                </a>
+                {% else %}
+                    <img src={{ asset('icons/no-cv.png')}} title="pas de cv" alt="pas de cv" class="icon" />
+                {% endif %}
                 {# <a href="{{ path('app_candidat', {'id': r.id}) }}">Détail</a> -  #}
                 <a href="{{ path('candidat_bloquer', {'id': r.id}) }}" class="btn btn-warning">Bloquer</a> -
                 <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
@@ -59,4 +73,15 @@
         {% endfor %}
     </ul>
 </div>
+{% endblock %}
+{% block stylesheets %}
+    <style>
+
+        .icon{
+            width: 30px
+        }
+        .icon-link{
+            text-decoration: none
+        }
+    </style>
 {% endblock %}

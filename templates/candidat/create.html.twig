@@ -27,7 +27,6 @@
         Enregistrer les modifications
     </button>
     
-
 {# </form> #}
 {{ form_end(formUser) }} 
 
@@ -36,7 +35,16 @@
 {{ form_start(formCandidat) }}
     {{ form_errors(formCandidat) }}
 
-    {{ form_row(formCandidat.cv, {'attr' : { 'placeholder' : 'cv', 'class':'candidat'}}) }}
+    {% if formCandidat.cv.vars['data'] is not empty %}
+        <a href={{ asset('uploads/cv/' ~ formCandidat.cv.vars['data']) }} target="_blank">Voir le CV (PDF)</a>
+        {{ form_row(formCandidat.cv, {'label': false, 'attr' : { 'placeholder' : 'cv', 'class':'candidat my-2', 
+        'onClick':'return confirm(\'Si vous uploadez un nouveau CV, le CV actuel sera écrasé. Continuer ? \')'
+        }}) }}
+    {% else %}
+        {{ form_row(formCandidat.cv, {'label': false, 'attr' : { 'placeholder' : 'cv', 'class':'candidat my-2' }}) }}
+
+    {% endif %}
+    
 
     <button type="submit" class="btn btn-primary candidat">
             Enregistrer le CV
