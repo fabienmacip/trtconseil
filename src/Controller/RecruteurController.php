@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recruteur;
 use App\Entity\User;
+use App\Entity\Annonce;
+use App\Entity\Candidature;
 use App\Form\RecruteurType;
 use App\Form\UserType;
 
@@ -179,10 +181,29 @@ class RecruteurController extends AbstractController
     {
         // Entity manager de Symfony
         $em = $this->getDoctrine()->getManager();
-        // On récupère le recruteur (User) concerné
+        // 1. On récupère le recruteur (User) concerné
         $recruteur = $em->getRepository(Recruteur::class)->findBy(['id' => $id])[0];
 
-        // Suppression de l'arbre
+        // 2. On récupère toutes les annonces du recruteur
+        $annonces = $em->getRepository(Annonce::class)->findBy(['recruteur' => $recruteur]);
+        
+        for($i = 0 ; $i < count($annonces) ; $i++) {
+                    
+            // 3. On récupère toutes les candidatures à ces annonces
+            $candidatures = $em->getRepository(Candidature::class)->findBy(['annonce' => $annonces[$i]]);
+            for($j = 0 ; $j < count($candidatures) ; $j++) {
+                $em->remove($candidatures[$j]);
+                $em->flush();
+            }
+            $candidatures = array();
+
+            $em->remove($annonces[$i]);
+            $em->flush();
+        } // FIN du for i
+
+
+
+        // 4. Suppression du recruteur
         $em->remove($recruteur);
         $em->flush();
         $em->remove($recruteur->getUser());

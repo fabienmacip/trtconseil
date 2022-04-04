@@ -27,7 +27,8 @@
                     {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
                     <a href="{{ path('annonce_valider', {'id': r.id}) }}" class="btn btn-warning">Valider</a> -
                     <a href="{{ path('annonce_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                    <a href="{{ path('annonce_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                    <a href="{{ path('annonce_remove', {'id': r.id}) }}" role="button" class="btn btn-danger"
+                        onClick="return confirm('Confirmer la suppression de cette annonce et de toutes les candidatures qui y sont liées ? ')">Supprimer</a>
                     
                 </li>
             {% endif %}
@@ -49,7 +50,8 @@
                 {# <a href="{{ path('app_annonce', {'id': r.id}) }}">Détail</a> -  #}
                 <a href="{{ path('annonce_bloquer', {'id': r.id}) }}" class="btn btn-warning">Bloquer</a> -
                 <a href="{{ path('annonce_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                <a href="{{ path('annonce_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                <a href="{{ path('annonce_remove', {'id': r.id}) }}" role="button" class="btn btn-danger"
+                    onClick="return confirm('Confirmer la suppression de cette annonce et de toutes les candidatures qui y sont liées ? ')">Supprimer</a>
                 
             </li>
             {% endif %}

@@ -16,7 +16,8 @@
             <li class="mb-1">{{ c.nom|upper }} {{c.prenom|capitalize}} {{c.username|lower}}
                 <a href="{{ path('app_consultant', {'id': c.id}) }}" class="btn btn-info">Détail</a> - 
                 <a href="{{ path('consultant_update', {'id': c.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                <a href="{{ path('consultant_remove', {'id': c.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                <a href="{{ path('consultant_remove', {'id': c.id}) }}" role="button" class="btn btn-danger"
+                    onClick="return confirm('Confirmer la suppression de ce consultant ? ')">Supprimer</a>
             </li>
         {% else %}
             <li><em>Aucun consultant trouvé.</em></li>

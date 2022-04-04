@@ -26,7 +26,8 @@
                     {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
                     <a href="{{ path('candidat_valider', {'id': r.id}) }}" class="btn btn-warning">Valider</a> -
                     <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                    <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                    <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger"
+                        onClick="return confirm('Confirmer la suppression de ce candidat et de ses candidatures ? ')">Supprimer</a>
                     
                 </li>
             {% endif %}
@@ -48,7 +49,8 @@
                 {# <a href="{{ path('app_candidat', {'id': r.id}) }}">Détail</a> -  #}
                 <a href="{{ path('candidat_bloquer', {'id': r.id}) }}" class="btn btn-warning">Bloquer</a> -
                 <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger"
+                    onClick="return confirm('Confirmer la suppression de ce candidat et de ses candidatures ? ')">Supprimer</a>
                 
             </li>
             {% endif %}

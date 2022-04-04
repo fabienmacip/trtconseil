@@ -26,7 +26,8 @@
                     {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
                     <a href="{{ path('recruteur_valider', {'id': r.id}) }}" class="btn btn-warning">Valider</a> -
                     <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                    <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                    <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger" 
+                        onClick="return confirm('Confirmer la suppression de ce recruteur et de toutes ces annonces et leurs candidatures ? ')">Supprimer</a>
                     
                 </li>
             {% endif %}
@@ -48,7 +49,8 @@
                 {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
                 <a href="{{ path('recruteur_bloquer', {'id': r.id}) }}" class="btn btn-warning">Bloquer</a> -
                 <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger">Supprimer</a>
+                <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger" 
+                    onClick="return confirm('Confirmer la suppression de ce recruteur et de toutes ces annonces et leurs candidatures ? ')">Supprimer</a>
                 
             </li>
             {% endif %}

@@ -4,21 +4,25 @@
 
 {% form_theme formRecruteur 'bootstrap_5_layout.html.twig' %}
 
+
+
 {% block body %}
+<script type="text/javascript" src="{{ asset('js/recruteurScript.js') }}"></script>
 
 <h1>Gestion d'un recruteur</h1>
 <h2>Données de l'entreprise</h2>
 {{ form_start(formRecruteur) }}
     {{ form_errors(formRecruteur) }}
 
-    {{ form_row(formRecruteur.entreprise_nom, {'attr' : { 'placeholder' : 'nom de l\'entreprise', 'minlength':'3'}}) }}
-    {{ form_row(formRecruteur.entreprise_adresse, {'attr' : { 'placeholder' : 'adresse'}}) }}
-    {{ form_row(formRecruteur.entreprise_code_postal, {'attr' : { 'placeholder' : 'code postal (5 chiffres)'}}) }}
-    {{ form_row(formRecruteur.entreprise_ville, {'attr' : { 'placeholder' : 'ville'}}) }}
+    {{ form_row(formRecruteur.entreprise_nom, {'attr' : { 'placeholder' : 'nom de l\'entreprise', 'minlength':'3', 'class':'entreprise'}}) }}
+    {{ form_row(formRecruteur.entreprise_adresse, {'attr' : { 'placeholder' : 'adresse', 'class':'entreprise'}}) }}
+    {{ form_row(formRecruteur.entreprise_code_postal, {'attr' : { 'placeholder' : 'code postal (5 chiffres)', 'class':'entreprise'}}) }}
+    {{ form_row(formRecruteur.entreprise_ville, {'attr' : { 'placeholder' : 'ville', 'class':'entreprise'}}) }}
 
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary entreprise">
             Enregistrer les modifications
     </button>
+    <button type="button" class="btn btn-secondary mx-1" id="switch">switch</button>
 {{ form_end(formRecruteur) }}
 
 {# ---------------------------------------------------------------- #}
@@ -28,26 +32,29 @@
 {# <form name="formUser" method="post">  #}
     {{ form_errors(formUser) }}
 
-    {{ form_row(formUser.nom, {'attr' : { 'placeholder' : 'nom'}}) }}
-    {{ form_row(formUser.prenom, {'attr' : { 'placeholder' : 'prenom'}}) }}
-    {{ form_row(formUser.username, {'attr' : { 'placeholder' : 'mail'}}) }}
-    {{ form_row(formUser.password, {'type' : 'password'}) }}
+    {{ form_row(formUser.nom, {'attr' : { 'placeholder' : 'nom', 'class':'utilisateur'}}) }}
+    {{ form_row(formUser.prenom, {'attr' : { 'placeholder' : 'prenom', 'class':'utilisateur'}}) }}
+    {{ form_row(formUser.username, {'attr' : { 'placeholder' : 'mail', 'class':'utilisateur'}}) }}
+    {{ form_row(formUser.password, {'type' : 'password', 'attr':{'class':'utilisateur'}}) }}
     {{ form_row(formUser.role, {'type': 'hidden', 'label': false, 'attr' : { 'placeholder' : 'role', 'readonly' : 'true'}}) }}
     
 
     {# <input type="hidden" name="roles" placeholder="roles" value="[]"/> #}
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary utilisateur">
         Enregistrer les modifications
     </button>
-
+    <a href="{{ path('recruteurs') }}" role="button" class="btn btn-dark mx-2">Retour à la liste des recruteurs</a>
 
 {# </form> #}
 {{ form_end(formUser) }} 
+
+
 <div class="my-5">&nbsp;</div>
 {% endblock %}
 
 {% block stylesheets %}
     <style>
+
         .container{
             width: 100%;
             border: 1px solid #ddd;
