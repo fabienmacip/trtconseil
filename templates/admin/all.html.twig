@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des administrateurs{% endblock %}
+
+{% block body %}
+<style>
+    .locked { background-color : silver; }
+    .validated { background-color : lightgray; }
+
+</style>
+
+<div class="example-wrapper locked mt-1 p-2">
+    <h1 class="px-2">Liste des administrateurs</h1>
+    <a href="{{ path('admin_create', {}) }}" role="button" class="btn btn-success">Ajouter un administrateur</a>
+</div>
+<div class="p-2 validated my-1">
+    <ul>
+        {%for c in admins %}
+            <li class="mb-1">{{ c.nom|upper }} {{c.prenom|capitalize}} {{c.username|lower}}
+                <a href="{{ path('app_admin', {'id': c.id}) }}" class="btn btn-info">Détail</a> - 
+                <a href="{{ path('admin_update', {'id': c.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
+                <a href="{{ path('admin_remove', {'id': c.id}) }}" role="button" class="btn btn-danger"
+                    onClick="return confirm('Confirmer la suppression de cet administrateur ? ')">Supprimer</a>
+            </li>
+        {% else %}
+            <li><em>Aucun administrateur trouvé.</em></li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}

@@ -28,11 +28,12 @@ class RegistrationFormType extends AbstractType
                 'choices' => [
                     'candidat' => 'candidat_tovalid',
                     'recruteur' => 'recruteur_tovalid',
-                    'consultant' => 'consultant'
+                    /* 'consultant' => 'consultant', */
+                    'administrateur' => 'admin_tovalid'
                 ]
             ])
-            ->add('nom')
-            ->add('prenom')
+            ->add('nom',TextType::class,['attr' => ['placeholder' => 'nom']])
+            ->add('prenom',TextType::class,['attr' => ['placeholder' => 'prénom']])
 
             /*->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -50,16 +51,35 @@ class RegistrationFormType extends AbstractType
                             'placeholder' => 'minimum 8 caractères'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Entrez un mot de passe',
                     ]),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'min' => 8,
+                        'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
+            ->add('password_confirm',PasswordType::class,[
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password',
+                            'placeholder' => 'minimum 8 caractères'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 8,
+                        'minMessage' => '',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
+
         ;
     }
 

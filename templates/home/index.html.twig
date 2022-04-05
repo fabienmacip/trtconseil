@@ -13,4 +13,10 @@
 <div>
     HOME PAGE
 </div>
+<div>
+{% if app.user %}
+{# {{dump(app.user)}} #}
+{# {{app.user.role}} #}
+{% endif %}
+</div>
 {% endblock %}

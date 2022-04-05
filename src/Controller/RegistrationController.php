@@ -34,6 +34,14 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setPasswordConfirm(
+                $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('password_confirm')->getData()
+                    )
+                );
+    
+
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
@@ -55,7 +63,7 @@ class RegistrationController extends AbstractController
 
             /* ********** CANDIDAT **************** */
             // Si le nouvel utilisateur est un candidat, alors il faut également créer une nouvelle
-            // entité RECRUTEUR
+            // entité CANDIDAT
             if($user->getRole() == "candidat_tovalid") {
                 $candidat = new Candidat();
                 // On récupère l'id du User

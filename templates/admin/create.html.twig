@@ -1,38 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Consultant{% endblock %}
+{% block title %}Administrateur{% endblock %}
 
-{% form_theme formConsultant 'bootstrap_5_layout.html.twig' %}
+{% form_theme formAdmin 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
 
 <h1>
-    {% if editMode %}
-        Gestion
-    {% else %}
-        Création
-    {% endif %}
- d'un consultant</h1>
+{% if editMode %}
+    Gestion
+{% else %}
+    Création
+{% endif %}
+ d'un administrateur</h1>
 
-{{ form_start(formConsultant) }}
+{{ form_start(formAdmin) }}
 
-{{ form_row(formConsultant.nom, {'attr' : { 'placeholder' : 'nom'}}) }}
-{{ form_row(formConsultant.prenom, {'attr' : { 'placeholder' : 'prénom'}}) }}
-{{ form_row(formConsultant.username, {'attr' : { 'placeholder' : 'mail'}}) }}
-{{ form_row(formConsultant.password, {'type' : 'password'}) }}
-{{ form_row(formConsultant.role, {'attr' : { 'placeholder' : 'role', 'value' : 'consultant', 'readonly' : 'true'}}) }}
+{{ form_row(formAdmin.nom, {'attr' : { 'placeholder' : 'nom'}}) }}
+{{ form_row(formAdmin.prenom, {'attr' : { 'placeholder' : 'prénom'}}) }}
+{{ form_row(formAdmin.username, {'attr' : { 'placeholder' : 'mail'}}) }}
+{{ form_row(formAdmin.password, {'type' : 'password'}) }}
+{{ form_row(formAdmin.role, {'attr' : { 'placeholder' : 'role', 'value' : 'admin', 'readonly' : 'true'}}) }}
 
 <input type="hidden" name="roles" placeholder="roles" value="[]"/>
-<a href="/consultants" role="button" class="btn btn-dark">Retour à la liste des consultants</a>
+<a href="/admins" role="button" class="btn btn-dark">Retour à la liste des administrateurs</a>
 <button type="submit" class="btn btn-primary">
     {% if editMode %}
         Enregistrer les modifications
     {% else %}
-        Ajouter le consultant
+        Ajouter l'administrateur
     {% endif %}
 </button>
 
-{{ form_end(formConsultant) }}
+{{ form_end(formAdmin) }}
 
 
 

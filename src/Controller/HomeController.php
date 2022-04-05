@@ -25,6 +25,23 @@ class HomeController extends AbstractController
 
 
     /**
+     * @Route("/admins", name="admins")
+     */
+    public function allAdmins(): Response
+    {
+        // On récupère l'Entity Manager de Symfony
+        //---$this->doctrine;
+        $em = $this->getDoctrine()->getManager();
+        //$consultants = $em->getRepository(User::class)->findAll();
+        $admins = $em->getRepository(User::class)->findBy(['role' => 'admin']);
+
+        return $this->render('admin/all.html.twig', [
+            'admins' => $admins,
+        ]);
+    }
+
+
+    /**
      * @Route("/consultants", name="consultants")
      */
     public function allConsultants(): Response
@@ -84,12 +101,12 @@ class HomeController extends AbstractController
         // On récupère l'Entity Manager de Symfony
         //---$this->doctrine;
         $em = $this->getDoctrine()->getManager();
-        
+        $resultatMail = isset($_SESSION["resultat_mail"])? $_SESSION["resultat_mail"] : "";
         $liste = $em->getRepository(Annonce::class)->findAll();
 
         return $this->render('annonce/all.html.twig', [
             'annonces' => $liste,
-            'mailok' => $_SESSION["resultat_mail"]
+            'mailok' => $resultatMail
         ]); 
     }
 

@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"username"}, message="Il y a déjà un utilisateur avec cette adresse mail")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -42,6 +42,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Length(min=8, max=255, minMessage="Au moins 8 caractères")
      */
     private $password;
+
+    /**
+     * @var string The hashed password
+     * @Assert\EqualTo(propertyPath="password", message="Les 2 mots de passe doivent être identiques." )
+     */
+    private $password_confirm;
 
     /**
      * @ORM\Column(type="string", length=40)
@@ -113,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -124,6 +130,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+    public function getPasswordConfirm(): ?string
+    {
+        return $this->password_confirm;
+    }
+
+    public function setPasswordConfirm(string $password): self
+    {
+        $this->password_confirm = $password;
+
+        return $this;
+    }
+
 
     /**
      * Returning a salt is only needed, if you are not using a modern
