@@ -9,8 +9,11 @@
 
 </style>
 
-<div class="example-wrapper locked mt-1">
+<div class="example-wrapper locked mt-1 p-2">
     <h1 class="px-2">Liste des consultants</h1>
+    <a href="{{ path('consultant_create', {}) }}" role="button" class="btn btn-success">Ajouter un consultant</a>
+</div>
+<div class="p-2 validated my-1">
     <ul>
         {%for c in consultants %}
             <li class="mb-1">{{ c.nom|upper }} {{c.prenom|capitalize}} {{c.username|lower}}
@@ -23,11 +26,7 @@
             <li><em>Aucun consultant trouvé.</em></li>
         {% endfor %}
     </ul>
-
-<div class="p-2">
-    Créer un nouveau consultant : <a href="{{ path('consultant_create', {}) }}" role="button" class="btn btn-success">Ajouter</a>
 </div>
 
 
-</div>
 {% endblock %}

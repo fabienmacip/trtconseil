@@ -83,7 +83,8 @@
 {% endif %}
 {% if dejapostule is same as false %}
     <div>{# candidat.id #}
-        <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': '61'})}}" role="button" class="btn btn-success">Postuler</a>
+        <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': '61'})}}" role="button" class="btn btn-success"
+        onClick="return confirm('Confirmer votre candidature à cette annonce ? ')">Postuler</a>
     </div>
 {% endif %}
 

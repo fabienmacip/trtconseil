@@ -1,27 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recruteur{% endblock %}
-
-{% form_theme formRecruteur 'bootstrap_5_layout.html.twig' %}
-
+{% block title %}Annonce{% endblock %}
+{% form_theme formAnnonce 'bootstrap_5_layout.html.twig' %}
 {% block body %}
 
-<h1>Gestion d'un recruteur</h1>
+<h1>Gestion d'une annonce</h1>
 
-{{ form_start(formRecruteur) }}
+{{ form_start(formAnnonce) }}
 
-{{ form_row(formRecruteur.nom, {'attr' : { 'placeholder' : 'nom', 'readonly' : 'true'}}) }}
-{{ form_row(formRecruteur.prenom, {'attr' : { 'placeholder' : 'prénom', 'readonly' : 'true'}}) }}
-{{ form_row(formRecruteur.username, {'attr' : { 'placeholder' : 'mail', 'readonly' : 'true'}}) }}
-{{ form_row(formRecruteur.password, {'type' : 'password', 'readonly' : 'true'}) }}
-{{ form_row(formRecruteur.role, {'type' : 'options', 'attr' : { 'placeholder' : 'role'}}) }}
+{{ form_row(formAnnonce.intitule, {'attr' : { 'placeholder' : 'Intitulé'}}) }}
+{{ form_row(formAnnonce.poste, {'attr' : { 'placeholder' : 'Poste'}}) }}
+{{ form_row(formAnnonce.ville, {'attr' : { 'placeholder' : 'Ville'}}) }}
+{{ form_row(formAnnonce.description, {'type' : 'textarea','attr' : { 'placeholder' : 'Description'}}) }}
 
-<input type="hidden" name="roles" placeholder="roles" value="[]"/>
-<button type="submit">
+{# <input type="hidden" name="recruteur" value={{recruteur.id}}/> #}
+{# <button type="submit">
         Enregistrer les modifications
 </button>
+ #}
+<a href="/annonces" role="button" class="btn btn-dark">Retour à la liste des annonces</a>
+<button type="submit" class="btn btn-primary">
+    {% if editMode %}
+        Enregistrer les modifications
+    {% else %}
+        Ajouter l'annonce
+    {% endif %}
+</button>
 
-{{ form_end(formRecruteur) }}
+{{ form_end(formAnnonce) }}
 
 
 

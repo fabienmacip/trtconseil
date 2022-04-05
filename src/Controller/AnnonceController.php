@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Annonce;
 use App\Entity\Candidature;
 use App\Entity\Candidat;
+use App\Entity\Recruteur;
 class AnnonceController extends AbstractController
 {
     /**
@@ -75,16 +76,25 @@ class AnnonceController extends AbstractController
      * CREATE or UPDATE
      * 
      * @Route("/annonce/update/{id}", name="annonce_update", requirements={"id"="\d+"})
-     * @Route("/annonce/create/", name="annonce_create")
+     * @Route("/annonce/create/{recruteur}", name="annonce_create", requirements={"recruteur"="\d+"})
      */
-    public function edit(Annonce $annonce = null, Request $request): Response
+    public function edit(Annonce $annonce = null, Request $request, int $recruteur = 0): Response
     {
+        
+        $em = $this->getDoctrine()->getManager();
 
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un annonce
         $editMode = true;
 
         if(!$annonce) {
             $annonce = new Annonce();
+
+            // *******************************************************************
+            // TROUVER LE RECRUTEUR qui est connecté !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // *******************************************************************
+            $recruteurObjet = $em->getRepository(Recruteur::class)->find($recruteur);
+            $annonce->setRecruteur($recruteurObjet);
+            
             $editMode = false;
         }
 
@@ -94,21 +104,22 @@ class AnnonceController extends AbstractController
                     ->add('poste')
                     ->add('ville')
                     ->add('description')
-                    ->add('date')
-                    ->add('validation')
                     ->getForm();
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             // Si l'annonce n'existe pas encore, on met une date de création.
-            /* if(!$annonce->getId()){
-                $annonce->setCreatedAt(new \DateTime());
-            } */
+             if(!$annonce->getId()){
+                $annonce->setDate(new \DateTime());
+                $annonce->setValidation(false);
+            } 
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($annonce);
             $em->flush();
+
+            unset($annonce);
+            unset($recruteurObjet);
 
             return $this->redirectToRoute('annonces');
             //return $this->render('annonce', ['id' => $recruteur->getId()]);

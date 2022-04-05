@@ -12,9 +12,13 @@
     .validated { background-color : lightgray; }
 </style>
 
+<div class="p-2 validated my-1">
+    <h1>Annonces</h1>
+    <a href="{{ path('annonce_create', {'recruteur':'53'}) }}" role="button" class="btn btn-success">Ajouter une annonce</a>
+</div>
 
 <div class="example-wrapper locked mt-1">
-    <h1 class="px-2">Liste des annonces à valider</h1>
+    <h2 class="px-2">Liste des annonces à valider</h2>
     <ul class="pb-1">
         {%for r in annonces %}
         
@@ -39,7 +43,7 @@
 </div>
 
 <div class="example-wrapper validated">
-    <h1 class="px-2">Liste des annonces validées</h1>
+    <h2 class="px-2">Liste des annonces validées</h2>
     <ul class="pb-1">
         {%for r in annonces %}
             {# Liste des annonces déjà validées #}
@@ -60,4 +64,6 @@
         {% endfor %}
     </ul>
 </div>
+
+
 {% endblock %}

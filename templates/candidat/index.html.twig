@@ -26,7 +26,9 @@
         <h3>CV</h3>
         {# <div>{{candidat.getCv()}}</div>   #}
         {% if candidat.cv is not empty %}
-        <a href="{{ asset('uploads/cv/' ~ candidat.cv) }}" target="_blank">Voir le CV (PDF)</a>
+        <a href="{{ asset('uploads/cv/' ~ candidat.cv) }}" target="_blank">
+            <img src={{ asset('icons/cv.png')}} title="Voir le CV (pdf)" alt="cv" class="icon"/>
+        </a>
         {% else %}
         pas de cv
         {% endif %}
@@ -47,4 +49,15 @@
 {# Bouton retour à la liste des candidats #}
 <a href="{{ path('candidats') }}" role="button" class="btn btn-dark">Retour à la liste des candidats</a>
 </div>
+{% endblock %}
+{% block stylesheets %}
+    <style>
+
+        .icon{
+            width: 60px
+        }
+        .icon-link{
+            text-decoration: none
+        }
+    </style>
 {% endblock %}
