@@ -56,14 +56,16 @@ class CandidatureController extends AbstractController
         $nom = $candidatObjet->getUser()->getNom();
         $prenom = $candidatObjet->getUser()->getPrenom();
 
-        $mailEnvoye = mail($mailRecruteur, $nom, $prenom);
-        if($mailEnvoye) {
+        $_SESSION["resultat_mail"] = mail($mailRecruteur, $nom, $prenom);
+        //$mailEnvoye = 
+        
+/*         if($mailEnvoye) {
             $resultat_mail = 'Mail envoyé OK';
         }else
         {
             $resultat_mail = 'Mail non envoyé - Erreur';
-        }
-        $_SESSION["resultat_mail"] = $resultat_mail;
+        } 
+        $_SESSION["resultat_mail"] = $resultat_mail; */
         // ************* MAIL - FIN *********************
 
 
@@ -73,8 +75,32 @@ class CandidatureController extends AbstractController
 
     public function mail($mailRecruteur = 'fabien.macip@gmail.com', $nom = 'MACIP', $prenom = 'Fabien', MailerInterface $mailer)
     {
-        /* ini_set("SMTP", "smtp.sendgrid.net");
-        ini_set('smtp_port','587'); */
+/*         $dest = "fabien.macip@gmail.com";
+        //$reponse = $dest.' ';
+        $sujet = "Email de test";
+        //$reponse .= $sujet.' ';
+        $corp = "Salut ceci est un email de test envoyé par un script PHP";
+        //$reponse .= $corp.' ';
+        $headers = "From: fabien.macip@gmail.com";
+        //$reponse .= $headers.' ';
+      
+        //return (mail($dest, $sujet, $corp, $headers));
+        
+        return mail($dest, $sujet, $corp, $headers);
+ */      
+
+
+
+
+
+
+
+
+
+
+
+
+
         $email = (new Email())
             ->from('fabien.macip@gmail.com')
             ->to($mailRecruteur)
@@ -82,13 +108,9 @@ class CandidatureController extends AbstractController
             ->text('Votre annonce a un nouveau candidat, il s\'agit de '.$nom.' '.$prenom.'.')
             ->html('<p>This is the HTML version</p>')
         ;
-        $mailer->send($email);
-        return true;
+        return $mailer->send($email);
+        /* return true; */
 
-        //return $this->redirectToRoute('annonces');
-/*         return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController',
-        ]);  */
     } // FIN function mail
 
 }
