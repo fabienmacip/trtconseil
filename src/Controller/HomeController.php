@@ -79,6 +79,8 @@ class HomeController extends AbstractController
      */
     public function allAnnonces(): Response
     {
+
+
         // On récupère l'Entity Manager de Symfony
         //---$this->doctrine;
         $em = $this->getDoctrine()->getManager();
@@ -86,7 +88,8 @@ class HomeController extends AbstractController
         $liste = $em->getRepository(Annonce::class)->findAll();
 
         return $this->render('annonce/all.html.twig', [
-            'annonces' => $liste
+            'annonces' => $liste,
+            'mailok' => $_SESSION["resultat_mail"]
         ]); 
     }
 

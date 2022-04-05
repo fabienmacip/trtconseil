@@ -12,6 +12,9 @@ use App\Entity\Candidat;
 use App\Entity\Annonce;
 use App\Form\CandidatureType;
 
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 class CandidatureController extends AbstractController
 {
     /**
@@ -43,32 +46,49 @@ class CandidatureController extends AbstractController
         // *******************************************************************
         $candidatObjet = $em->getRepository(Candidat::class)->find($candidat);
 
-   /*      $validation = 0; */
+        $candidature->setAnnonce($annonceObjet);
+        $candidature->setCandidat($candidatObjet);
+        $em->persist($candidature);
+        $em->flush();
 
-/*         if($request->attributes->get('_route') === 'annonce_bloquer')
+        // ************* MAIL *********************
+        $mailRecruteur = $annonceObjet->getRecruteur()->getUser()->getUsername();
+        $nom = $candidatObjet->getUser()->getNom();
+        $prenom = $candidatObjet->getUser()->getPrenom();
+
+        $mailEnvoye = mail($mailRecruteur, $nom, $prenom);
+        if($mailEnvoye) {
+            $resultat_mail = 'Mail envoyé OK';
+        }else
         {
-          $validation = 0;
+            $resultat_mail = 'Mail non envoyé - Erreur';
         }
-        
-        if($request->attributes->get('_route') === 'annonce_valider')
-        {
-            $validation = 1;
-        } */
+        $_SESSION["resultat_mail"] = $resultat_mail;
+        // ************* MAIL - FIN *********************
 
-        /* if($validation !== '') { */
-            $candidature->setAnnonce($annonceObjet);
-            $candidature->setCandidat($candidatObjet);
-            $em->persist($candidature);
-            $em->flush();
-        /* } */
 
         return $this->redirectToRoute('annonces');
-        /* /all.html.twig',[
-            'annonce' => $annonceObjet,
-            'candidat' => $candidatObjet
-        ]); */
 
     } // FIN function create
 
+    public function mail($mailRecruteur = 'fabien.macip@gmail.com', $nom = 'MACIP', $prenom = 'Fabien', MailerInterface $mailer)
+    {
+        /* ini_set("SMTP", "smtp.sendgrid.net");
+        ini_set('smtp_port','587'); */
+        $email = (new Email())
+            ->from('fabien.macip@gmail.com')
+            ->to($mailRecruteur)
+            ->subject('Candidature à une annonce')
+            ->text('Votre annonce a un nouveau candidat, il s\'agit de '.$nom.' '.$prenom.'.')
+            ->html('<p>This is the HTML version</p>')
+        ;
+        $mailer->send($email);
+        return true;
+
+        //return $this->redirectToRoute('annonces');
+/*         return $this->render('default/index.html.twig', [
+            'controller_name' => 'DefaultController',
+        ]);  */
+    } // FIN function mail
 
 }

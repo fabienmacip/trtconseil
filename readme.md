@@ -145,19 +145,29 @@ composer require fzaninotto/faker --dev
 Infos ici :  
 > https://github.com/fzaninotto/Faker  
 
+# Installation du MAILER
+> composer require symfony/mailer  
+Sendgrid  
+&A_20&V_20  
+Créer une clé API sur SendGrid  
+> composer require symfony/sendgrid-mailer  
+
+
+# Configuration SENDMAIL depuis LocalHost
+> sendmail.ini
+SMTP=smtp.gmail.com
+smtp_port=587
+> php.ini
+sendmail_from = VotreGmailId@gmail.com
+sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"
+
+smtp_server=smtp.gmail.com
+smtp_port=587
+error_logfile=error.log
+debug_logfile=debug.log
+auth_username=VotreGmailId@gmail.com
+auth_password=Votre-MotDePasse-Gmail
+force_sender=VotreGmailId@gmail.com(optionnel)
 
 
 
-
--------------------------------------------------------
-
-### Ancien formulaire CONSULTANT
-<form action="" method="post">
-    <input type="text" name="username" placeholder="username" />
-    <input type="password" name="password" placeholder="password" />
-    <input type="text" name="nom" placeholder="nom" />
-    <input type="text" name="prenom" placeholder="prenom" />
-    <input type="text" name="roles" placeholder="roles" value="[]"/>
-    <input type="text" name="role" placeholder="role" value="consultant"/>
-    <button type="submit">Enregister</button>
-</form>
