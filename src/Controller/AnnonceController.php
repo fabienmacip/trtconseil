@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
 use App\Entity\Annonce;
 use App\Entity\Candidature;
 use App\Entity\Candidat;
@@ -105,6 +106,9 @@ class AnnonceController extends AbstractController
                     ->add('ville')
                     ->add('description')
                     ->getForm();
+
+                    /* , TextareaType::class, [
+                        'attr' => array('cols' => '5', 'rows' => '5')]                     */
 
         $form->handleRequest($request);
 

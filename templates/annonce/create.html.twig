@@ -11,7 +11,9 @@
 {{ form_row(formAnnonce.intitule, {'attr' : { 'placeholder' : 'Intitulé'}}) }}
 {{ form_row(formAnnonce.poste, {'attr' : { 'placeholder' : 'Poste'}}) }}
 {{ form_row(formAnnonce.ville, {'attr' : { 'placeholder' : 'Ville'}}) }}
-{{ form_row(formAnnonce.description, {'type' : 'textarea','attr' : { 'placeholder' : 'Description'}}) }}
+{{ form_row(formAnnonce.description, {'mapped':'false', 'disabled':'true', 'attr' : { 'placeholder' : 'Description', 'rows':'4', 'class':'invisible'}}) }} 
+
+<textarea rows='4' id="form_description" name="form[description]" required="required" maxlength="255" class="form-control">{{formAnnonce.description.vars['data']}}</textarea>
 
 {# <input type="hidden" name="recruteur" value={{recruteur.id}}/> #}
 {# <button type="submit">
@@ -35,6 +37,9 @@
 
 {% block stylesheets %}
     <style>
+        .invisible{
+            display:none;
+        }
         .container{
             width: 100%;
             border: 1px solid #ddd;

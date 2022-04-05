@@ -56,7 +56,7 @@ class CandidatureController extends AbstractController
         $nom = $candidatObjet->getUser()->getNom();
         $prenom = $candidatObjet->getUser()->getPrenom();
 
-        $_SESSION["resultat_mail"] = mail($mailRecruteur, $nom, $prenom);
+        $_SESSION["resultat_mail"] = "Envoie du mail au recruteur : ".mail($mailRecruteur, $nom, $prenom);
         //$mailEnvoye = 
         
 /*         if($mailEnvoye) {
@@ -88,16 +88,6 @@ class CandidatureController extends AbstractController
         
         return mail($dest, $sujet, $corp, $headers);
  */      
-
-
-
-
-
-
-
-
-
-
 
 
 
