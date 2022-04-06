@@ -18,6 +18,7 @@ class AnnonceController extends AbstractController
      * READ
      * 
      * @Route("/annonce/{id}", name="app_annonce", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CANDIDAT")
      */
     public function index(int $id): Response
     {
@@ -43,6 +44,7 @@ class AnnonceController extends AbstractController
      * 
      * @Route("/annonce/valider/{id}", name="annonce_valider", requirements={"id"="\d+"})
      * @Route("/annonce/bloquer/{id}", name="annonce_bloquer", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CONSULTANT")
      */
     public function role(Annonce $annonce = null, Request $request): Response
     {
@@ -79,6 +81,7 @@ class AnnonceController extends AbstractController
      * 
      * @Route("/annonce/update/{id}", name="annonce_update", requirements={"id"="\d+"})
      * @Route("/annonce/create/{recruteur}", name="annonce_create", requirements={"recruteur"="\d+"})
+     * @IsGranted("ROLE_RECRUTEUR")
      */
     public function edit(Annonce $annonce = null, Request $request, int $recruteur = 0): Response
     {
@@ -144,6 +147,7 @@ class AnnonceController extends AbstractController
      * DELETE
      * 
      * @Route("/annonce_remove/{id}", name="annonce_remove")
+     * @IsGranted("ROLE_RECRUTEUR")
      */
     public function remove(int $id): Response
     {

@@ -27,6 +27,7 @@ class RecruteurController extends AbstractController
      * READ
      * 
      * @Route("/recruteur/{id}", name="app_recruteur", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_RECRUTEUR")
      */
     public function index(int $id): Response
     {
@@ -44,6 +45,7 @@ class RecruteurController extends AbstractController
      * 
      * @Route("/recruteur/valider/{id}", name="recruteur_valider", requirements={"id"="\d+"})
      * @Route("/recruteur/bloquer/{id}", name="recruteur_bloquer", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CONSULTANT")
      */
     public function role(Recruteur $recruteur = null, Request $request): Response
     {
@@ -85,6 +87,7 @@ class RecruteurController extends AbstractController
      * 
      * @Route("/recruteur/update/{id}", name="recruteur_update", requirements={"id"="\d+"})
      * @Route("/recruteur/create/", name="recruteur_create")
+     * @IsGranted("ROLE_RECRUTEUR")
      */
     public function edit(Recruteur $recruteur = null, User $user = null, Request $request): Response
     {
@@ -183,6 +186,7 @@ class RecruteurController extends AbstractController
      * DELETE
      * 
      * @Route("/recruteur_remove/{id}", name="recruteur_remove")
+     * @IsGranted("ROLE_CONSULTANT")
      */
     public function remove(int $id): Response
     {

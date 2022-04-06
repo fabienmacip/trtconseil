@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
         $admin = new User();
         $admin->setUsername("fabien.macip@gmail.com")
             ->setPassword("tttttttt")
-            ->setRoles([])
+            ->setRoles(['ROLE_ADMIN'])
             ->setNom("MACIP")
             ->setPrenom("Fabien")
             ->setRole("admin");
@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setUsername($faker->email)
                 ->setPassword($faker->password)
-                ->setRoles([])
+                ->setRoles(['ROLE_CONSULTANT'])
                 /* ->setNom("DURAND".$i) */
                 ->setNom($faker->lastName)
                 ->setPrenom($faker->firstName)
@@ -52,7 +52,7 @@ class AppFixtures extends Fixture
             $user2 = new User();
             $user2->setUsername($faker->email)
                 ->setPassword($faker->password)
-                ->setRoles([])
+                ->setRoles(['ROLE_CANDIDAT'])
                 ->setNom($faker->lastName)
                 ->setPrenom($faker->firstName)
                 ->setRole("candidat_tovalid");
@@ -66,7 +66,7 @@ class AppFixtures extends Fixture
             $user3 = new User();
             $user3->setUsername($faker->email)
             ->setPassword($faker->password)
-                ->setRoles([])
+                ->setRoles(['ROLE_RECRUTEUR'])
                 ->setNom($faker->lastName)
                 ->setPrenom($faker->firstName)
                 ->setRole("recruteur_tovalid");

@@ -20,6 +20,7 @@ class AdminController extends AbstractController
      * READ
      * 
      * @Route("/admin/{id}", name="app_admin", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(int $id): Response
     {
@@ -39,6 +40,7 @@ class AdminController extends AbstractController
      * 
      * @Route("/admin/create/", name="admin_create")
      * @Route("/admin/update/{id}", name="admin_update", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(User $admin = null, Request $request): Response
     {
@@ -90,6 +92,7 @@ class AdminController extends AbstractController
      * DELETE
      * 
      * @Route("/admin_remove/{id}", name="admin_remove")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function remove(int $id): Response
     {

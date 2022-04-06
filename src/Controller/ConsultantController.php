@@ -21,6 +21,7 @@ class ConsultantController extends AbstractController
      * READ
      * 
      * @Route("/consultant/{id}", name="app_consultant", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(int $id): Response
     {
@@ -40,6 +41,7 @@ class ConsultantController extends AbstractController
      * 
      * @Route("/consultant/create/", name="consultant_create")
      * @Route("/consultant/update/{id}", name="consultant_update", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(User $consultant = null, Request $request): Response
     {
@@ -92,6 +94,7 @@ class ConsultantController extends AbstractController
      * DELETE
      * 
      * @Route("/consultant_remove/{id}", name="consultant_remove")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function remove(int $id): Response
     {

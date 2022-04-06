@@ -21,6 +21,7 @@ class CandidatureController extends AbstractController
 {
     /**
      * @Route("/candidature", name="app_candidature")
+     * @IsGranted("ROLE_CANDIDAT")
      */
     public function index(): Response
     {
@@ -33,6 +34,7 @@ class CandidatureController extends AbstractController
      * CREATE or UPDATE
      * 
      * @Route("/candidature/create/{annonce}/{candidat}", name="candidature_create", requirements={"annonce"="\d+","candidat"="\d+"})
+     * @IsGranted("ROLE_CANDIDAT")
      */
     public function createOnly(Request $request, int $annonce, int $candidat): Response
     {

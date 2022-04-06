@@ -170,8 +170,10 @@ auth_password=Votre-MotDePasse-Gmail
 force_sender=VotreGmailId@gmail.com(optionnel)  
 
 # Configuration de la sécurité
-composer req annotations
-* @IsGranted("ROLE_ADMIN")
+> composer req annotations  
+> use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;  
+> * @IsGranted("ROLE_ADMIN")  
+
 
 
 

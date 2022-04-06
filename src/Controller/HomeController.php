@@ -45,6 +45,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/consultants", name="consultants")
+     * @IsGranted("ROLE_CONSULTANT")
      */
     public function allConsultants(): Response
     {
@@ -62,6 +63,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/recruteurs", name="recruteurs")
+     * @IsGranted("ROLE_CONSULTANT")
      */
     public function allRecruteurs(): Response
     {
@@ -78,6 +80,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/candidats", name="candidats")
+     * @IsGranted("ROLE_CANDIDAT")
      */
     public function allCandidats(): Response
     {
@@ -95,6 +98,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/annonces", name="annonces")
+     * @IsGranted("ROLE_CANDIDAT")
      */
     public function allAnnonces(): Response
     {

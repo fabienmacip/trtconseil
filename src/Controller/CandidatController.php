@@ -25,6 +25,7 @@ class CandidatController extends AbstractController
      * 
      * @Route("/candidat/{id}", name="app_candidat", requirements={"id"="\d+"})
      * @Route("/candidat/{id}/{annonce}", name="app_candidat_annonce", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CANDIDAT")
      */
     public function index(int $id, int $annonce = null): Response
     {
@@ -43,6 +44,7 @@ class CandidatController extends AbstractController
      * 
      * @Route("/candidat/valider/{id}", name="candidat_valider", requirements={"id"="\d+"})
      * @Route("/candidat/bloquer/{id}", name="candidat_bloquer", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CONSULTANT")
      */
     public function role(Candidat $candidat = null, Request $request): Response
     {
@@ -79,6 +81,7 @@ class CandidatController extends AbstractController
      * 
      * @Route("/candidat/update/{id}", name="candidat_update", requirements={"id"="\d+"})
      * @Route("/candidat/create/", name="candidat_create")
+     * @IsGranted("ROLE_CANDIDAT")
      */
     public function edit(Candidat $candidat = null, User $user = null, Request $request): Response
     {
@@ -200,6 +203,7 @@ class CandidatController extends AbstractController
      * DELETE
      * 
      * @Route("/candidat_remove/{id}", name="candidat_remove")
+     * @IsGranted("ROLE_CONSULTANT")
      */
     public function remove(int $id): Response
     {
