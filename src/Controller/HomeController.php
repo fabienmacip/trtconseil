@@ -108,7 +108,18 @@ class HomeController extends AbstractController
         //---$this->doctrine;
         $em = $this->getDoctrine()->getManager();
         $resultatMail = isset($_SESSION["resultat_mail"])? $_SESSION["resultat_mail"] : "";
-        $liste = $em->getRepository(Annonce::class)->findAll();
+        
+        // Si le USER est RECRUTEUR, on n'affiche que SES annonces
+         if($this->getUser()->getRole() === 'recruteur'){
+             
+            $recruteur = $em->getRepository(Recruteur::class)->findOneBy(['user'=>$this->getUser()->getId()]);
+            $liste = $em->getRepository(Annonce::class)->findBy(['recruteur'=>$recruteur->getId()]);
+        } else {
+            $liste = $em->getRepository(Annonce::class)->findAll();
+        }
+        
+
+
 
         return $this->render('annonce/all.html.twig', [
             'annonces' => $liste,
