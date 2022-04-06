@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 class ConsultantController extends AbstractController
 {
     /**
@@ -48,6 +50,7 @@ class ConsultantController extends AbstractController
         if(!$consultant) {
             $consultant = new User();
             $editMode = false;
+            $consultant->setRoles(['ROLE_CONSULTANT']);
         }
 
         //$form = $this->createForm(UserType::class, $consultant);

@@ -41,15 +41,26 @@ class RegistrationController extends AbstractController
                     )
                 );
     
+            // Si le nouvel utilisateur est ADMIN
+            if($user->getRole() == "admin_tovalid") {
+                // ROLES
+                $user->setRoles(['ROLE_ADMIN_TOVALID']);
+            }
+
 
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
+
             /* ********** RECRUTEUR **************** */
             // Si le nouvel utilisateur est un recruteur, alors il faut également créer une nouvelle
             // entité RECRUTEUR
             if($user->getRole() == "recruteur_tovalid") {
+
+                // ROLES
+                $user->setRoles(['ROLE_RECRUTEUR_TOVALID']);
+
                 $recruteur = new Recruteur();
                 // On récupère l'id du User
                 $user_created = $entityManager->getRepository(User::class)->findOneBy(['role'=>'recruteur_tovalid', ],['id' => 'DESC'],1 );
@@ -65,6 +76,9 @@ class RegistrationController extends AbstractController
             // Si le nouvel utilisateur est un candidat, alors il faut également créer une nouvelle
             // entité CANDIDAT
             if($user->getRole() == "candidat_tovalid") {
+                // ROLES
+                $user->setRoles(['ROLE_CANDIDAT_TOVALID']);                
+
                 $candidat = new Candidat();
                 // On récupère l'id du User
                 $user_created = $entityManager->getRepository(User::class)->findOneBy(['role'=>'candidat_tovalid', ],['id' => 'DESC'],1 );

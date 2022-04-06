@@ -15,6 +15,7 @@ use App\Form\UserType;
 
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /* use App\Form\UserType;
 use App\Entity\User; */
@@ -55,15 +56,18 @@ class RecruteurController extends AbstractController
             if($request->attributes->get('_route') === 'recruteur_bloquer')
             {
               $role = 'recruteur_tovalid';
+              $roles = ['ROLE_RECRUTEUR_TOVALID'];
             }
             
             if($request->attributes->get('_route') === 'recruteur_valider')
             {
                 $role = 'recruteur';
+                $roles = ['ROLE_RECRUTEUR'];
             }
 
             if($role !== '') {
                 $recruteur->getUser()->setRole($role);
+                $recruteur->getUser()->setRoles($roles);
                 $em->persist($recruteur);
                 $em->flush();
             }
@@ -141,6 +145,8 @@ class RecruteurController extends AbstractController
         $formUser->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+
             $em->persist($recruteur);
             $em->flush();
 
@@ -149,7 +155,8 @@ class RecruteurController extends AbstractController
         }
 
         if($formUser->isSubmitted() && $formUser->isValid()) {
-            var_dump("valide user");
+            //var_dump("valide user");
+
                 $em->persist($user);
                 $em->flush();
     

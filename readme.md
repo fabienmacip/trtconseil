@@ -154,20 +154,24 @@ Créer une clé API sur SendGrid
 
 
 # Configuration SENDMAIL depuis LocalHost
-> sendmail.ini
-SMTP=smtp.gmail.com
-smtp_port=587
-> php.ini
-sendmail_from = VotreGmailId@gmail.com
-sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"
+> sendmail.ini 
+SMTP=smtp.gmail.com  
+smtp_port=587  
+> php.ini 
+sendmail_from = VotreGmailId@gmail.com  
+sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"  
 
-smtp_server=smtp.gmail.com
-smtp_port=587
-error_logfile=error.log
-debug_logfile=debug.log
-auth_username=VotreGmailId@gmail.com
-auth_password=Votre-MotDePasse-Gmail
-force_sender=VotreGmailId@gmail.com(optionnel)
+smtp_server=smtp.gmail.com  
+smtp_port=587  
+error_logfile=error.log  
+debug_logfile=debug.log  
+auth_username=VotreGmailId@gmail.com  
+auth_password=Votre-MotDePasse-Gmail  
+force_sender=VotreGmailId@gmail.com(optionnel)  
+
+# Configuration de la sécurité
+composer req annotations
+* @IsGranted("ROLE_ADMIN")
 
 
 

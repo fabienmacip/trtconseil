@@ -15,6 +15,8 @@ use App\Form\CandidatureType;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 class CandidatureController extends AbstractController
 {
     /**

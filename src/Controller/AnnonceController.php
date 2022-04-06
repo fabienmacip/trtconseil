@@ -11,6 +11,7 @@ use App\Entity\Annonce;
 use App\Entity\Candidature;
 use App\Entity\Candidat;
 use App\Entity\Recruteur;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class AnnonceController extends AbstractController
 {
     /**

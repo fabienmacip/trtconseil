@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Recruteur;
 use App\Entity\Candidat;
 use App\Entity\Annonce;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class HomeController extends AbstractController
 {
@@ -26,6 +27,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/admins", name="admins")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function allAdmins(): Response
     {

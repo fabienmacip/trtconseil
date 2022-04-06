@@ -13,6 +13,7 @@ use App\Form\UserType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -52,15 +53,18 @@ class CandidatController extends AbstractController
             if($request->attributes->get('_route') === 'candidat_bloquer')
             {
               $role = 'candidat_tovalid';
+              $roles = ['ROLE_CANDIDAT_TOVALID'];
             }
             
             if($request->attributes->get('_route') === 'candidat_valider')
             {
                 $role = 'candidat';
+                $roles = ['ROLE_CANDIDAT'];
             }
 
             if($role !== '') {
                 $candidat->getUser()->setRole($role);
+                $candidat->getUser()->setRoles($roles);
                 $em->persist($candidat);
                 $em->flush();
             }
