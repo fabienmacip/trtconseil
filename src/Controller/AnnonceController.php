@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
 use App\Entity\Annonce;
 use App\Entity\Candidature;
 use App\Entity\Candidat;
+use App\Entity\User;
 use App\Entity\Recruteur;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class AnnonceController extends AbstractController
@@ -25,19 +26,16 @@ class AnnonceController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $annonce = $em->getRepository(Annonce::class)->findOneBy(['id'=>$id]);
 
-/*         $recruteur = $em->getRepository(Recruteur::class)->find($annonce->getRecruteur()->getId()); */
-
         $candidatures = $em->getRepository(Candidature::class)->findBy(['annonce' => $annonce]);
 
         /* Ajout d'un candidat fictif pour pouvoir tester le bouton POSTULER A UNE ANNONCE */
-        $candidatFictif = $em->getRepository(Candidat::class)->find('37');
-//        $candidatFictif = $candidats[0];
+        $candidat = $em->getRepository(Candidat::class)->findOneBy(['user'=>$this->getUser()]);
 
         return $this->render('annonce/index.html.twig', [
             'annonce' => $annonce,
             /* 'recruteur' => $recruteur, */
             'candidatures' => $candidatures,
-            'candidat' => $candidatFictif,
+            'candidat' => $candidat,
         ]);
     }
 

@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Entity\Recruteur;
 use App\Entity\Candidat;
+use App\Entity\Candidature;
 use App\Entity\Annonce;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -112,15 +113,30 @@ class HomeController extends AbstractController
         $resultatMail = isset($_SESSION["resultat_mail"])? $_SESSION["resultat_mail"] : "";
         
         // Si le USER est RECRUTEUR, on n'affiche que SES annonces
+        // Si le USER est CANDIDAT, on n'affiche que les annonces VALIDES et on indique celles où il a déjà postulé
+        $recruteurId = 0;
+        $candidatId = 0;
+        $dejaPostule = [];
          if($this->getUser()->getRole() === 'recruteur'){
              
             $recruteur = $em->getRepository(Recruteur::class)->findOneBy(['user'=>$this->getUser()->getId()]);
             $recruteurId = $recruteur->getId();
             $liste = $em->getRepository(Annonce::class)->findBy(['recruteur'=>$recruteur->getId()]);
             
-        } else {
+        } elseif($this->getUser()->getRole() === 'candidat'){
+            $liste = $em->getRepository(Annonce::class)->findBy(['validation' => '1']);
+            $candidat = $em->getRepository(Candidat::class)->findOneBy(['user'=>$this->getUser()->getId()]);
+            $candidatId = $candidat->getId();
+            $dejaPostuleObjects = $em->getRepository(Candidature::class)->findBy(['candidat' => $candidat]);
+            
+            for ($dj = 0 ; $dj < count($dejaPostuleObjects) ; $dj++) {
+                array_push($dejaPostule,$dejaPostuleObjects[$dj]->getAnnonce()->getId());
+            }
+
+            //$dejaPostule = $dejaPostuleArray[0]->getAnnonce()->getId();
+
+        } else{
             $liste = $em->getRepository(Annonce::class)->findAll();
-            $recruteurId = 0;
         }
         
 
@@ -129,7 +145,9 @@ class HomeController extends AbstractController
         return $this->render('annonce/all.html.twig', [
             'annonces' => $liste,
             'mailok' => $resultatMail,
-            'id_recruteur' => $recruteurId
+            'id_recruteur' => $recruteurId,
+            'id_candidat' => $candidatId,
+            'deja_postule' => $dejaPostule
         ]); 
     }
 

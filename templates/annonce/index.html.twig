@@ -81,15 +81,15 @@
         {% endfor %}
     {% endif %}
 {% endif %}
-{% if app.user.role is same as "candidat" %}
 
-    {% if dejapostule is same as false %}
+
+{% if app.user.role is same as "candidat" and dejapostule is same as false %}
+    
         <div>{# candidat.id #}
-            <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': '61'})}}" role="button" class="btn btn-success"
+            <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': candidat.id })}}" role="button" class="btn btn-success"
             onClick="return confirm('Confirmer votre candidature à cette annonce ? ')">Postuler</a>
         </div>
-    {% endif %}
-
+    
 {% endif %}
 
 
