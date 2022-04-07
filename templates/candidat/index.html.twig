@@ -42,13 +42,24 @@
 
 {# Bouton retour sur l'annonce (pour le recruteur) #}
 <div>
-{% if annonce %}
+{% if annonce is defined %}
 <a href="{{ path('app_annonce', {'id': annonce}) }}" role="button" class="btn btn-dark mx-2">Retour à l'annonce</a>
 {% endif %}
 
-{# Bouton retour à la liste des candidats #}
-<a href="{{ path('candidats') }}" role="button" class="btn btn-dark">Retour à la liste des candidats</a>
 </div>
+
+
+{# Si on vient de la home page #}
+{% if back is defined and back is not same as 'admins' %}
+    {# <a href="{{ path('home') }}" role="button" class="btn btn-dark">Retour</a> #}
+    <a href="{{ path('candidat_update', {'id': candidat.id, 'back': 'home'}) }}" role="button" class="btn btn-primary">Modifier</a>
+{# Si on vient de la liste des candidats #}
+{% else %}
+    {# Bouton retour à la liste des candidats #}
+    <a href="{{ path('candidats') }}" role="button" class="btn btn-dark">Retour à la liste des candidats</a>
+{% endif %}
+
+
 {% endblock %}
 {% block stylesheets %}
     <style>

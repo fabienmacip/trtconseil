@@ -27,5 +27,14 @@
 
 </div>
 <br/><br/>
-<a href="{{ path('admins') }}" role="button" class="btn btn-dark">Retour à la liste des administrateurs</a>
+
+{# Si on vient de la home page #}
+{% if back is defined and back is not same as 'admins' %}
+    {# <a href="{{ path('home') }}" role="button" class="btn btn-dark">Retour</a> #}
+    <a href="{{ path('admin_update', {'id': admin.id, 'back': 'home'}) }}" role="button" class="btn btn-primary">Modifier</a>
+{# Si on vient de la liste des admins #}
+{% else %}
+    <a href="{{ path('admins') }}" role="button" class="btn btn-dark">Retour à la liste des administrateurs</a>
+{% endif %}
+
 {% endblock %}

@@ -35,5 +35,16 @@
 
 </div>
 <br/><br/>
-<a href="{{ path('recruteurs') }}" role="button" class="btn btn-dark">Retour à la liste des recruteurs</a>
+
+{# Si on vient de la home page #}
+{% if back is defined and back is not same as 'recruteurs' %}
+    <a href="{{ path('recruteur_update', {'id': recruteur.id, 'back': 'home'}) }}" role="button" class="btn btn-primary">Modifier</a>
+{# Si on vient de la liste des recrteurs #}
+{% else %}
+    {# Bouton retour à la liste des recrteurs #}
+    <a href="{{ path('recruteurs') }}" role="button" class="btn btn-dark">Retour à la liste des recruteurs</a>
+{% endif %}
+
+
+
 {% endblock %}

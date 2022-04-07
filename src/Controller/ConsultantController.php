@@ -40,10 +40,10 @@ class ConsultantController extends AbstractController
      * CREATE or UPDATE
      * 
      * @Route("/consultant/create/", name="consultant_create")
-     * @Route("/consultant/update/{id}", name="consultant_update", requirements={"id"="\d+"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/consultant/update/{id}/{back}", name="consultant_update", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_CONSULTANT")
      */
-    public function edit(User $consultant = null, Request $request): Response
+    public function edit(User $consultant = null, $back = 'consultants', Request $request): Response
     {
 
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un consultant
@@ -76,13 +76,14 @@ class ConsultantController extends AbstractController
             $em->persist($consultant);
             $em->flush();
 
-            return $this->redirectToRoute('consultants');
+            return $this->redirectToRoute($back);
             //return $this->render('consultant', ['id' => $consultant->getId()]);
         }
 
         return $this->render('consultant/create.html.twig',[
             'formConsultant' => $form->createView(),
-            'editMode' => $editMode
+            'editMode' => $editMode,
+            'back' => $back
         ]);
 
 

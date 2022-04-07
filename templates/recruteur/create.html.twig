@@ -43,7 +43,16 @@
     <button type="submit" class="btn btn-primary utilisateur">
         Enregistrer les modifications
     </button>
-    <a href="{{ path('recruteurs') }}" role="button" class="btn btn-dark mx-2">Retour à la liste des recruteurs</a>
+
+    {# Si on vient de la home page #}
+    {% if back is defined and back is not same as 'recruteurs' %}
+        <a href="{{ path('home') }}" role="button" class="btn btn-dark">Retour</a>
+    {# Si on vient de la liste des recruteurs #}
+    {% else %}
+        <a href="{{ path('recruteurs') }}" role="button" class="btn btn-dark mx-2">Retour à la liste des recruteurs</a>
+    {% endif %}
+
+
 
 {# </form> #}
 {{ form_end(formUser) }} 

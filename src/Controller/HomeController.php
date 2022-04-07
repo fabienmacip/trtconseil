@@ -20,11 +20,40 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
-    }
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($this->getUser());
+        
+        if($user->getRole() === 'admin' || $user->getRole() === 'admin_tovalid'){
+            return $this->render('admin/index.html.twig', [
+                'admin' => $user,
+                'back' => 'home'
+            ]);
+        } else if ($user->getRole() === 'consultant' || $user->getRole() === 'consultant_tovalid'){
+            return $this->render('consultant/index.html.twig', [
+                'consultant' => $user,
+                'back' => 'home'
+            ]);
+        } else if ($user->getRole() === 'recruteur' || $user->getRole() === 'recruteur_tovalid'){
+            $recruteur = $em->getRepository(Recruteur::class)->findBy(['user' => $user])[0];
+            return $this->render('recruteur/index.html.twig', [
+                'recruteur' => $recruteur,
+                'back' => 'home'
+            ]);
+        } else if ($user->getRole() === 'candidat' || $user->getRole() === 'candidat_tovalid'){
+            $candidat = $em->getRepository(Candidat::class)->findBy(['user' => $user])[0];
+            return $this->render('candidat/index.html.twig', [
+                'candidat' => $candidat,
+                'back' => 'home'
+            ]);
+        } else {
+            return $this->render('home/index.html.twig', [
+                'controller_name' => 'HomeController',
+                'user' => $user
+            ]);
 
+        }
+
+    }
 
     /**
      * @Route("/admins", name="admins")

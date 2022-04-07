@@ -75,10 +75,10 @@ class AdminController extends AbstractController
      * CREATE or UPDATE
      * 
      * @Route("/admin/create/", name="admin_create")
-     * @Route("/admin/update/{id}", name="admin_update", requirements={"id"="\d+"})
+     * @Route("/admin/update/{id}/{back}", name="admin_update", requirements={"id"="\d+"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(User $admin = null, Request $request): Response
+    public function edit(User $admin = null, Request $request, $back = 'admins'): Response
     {
 
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un consultant
@@ -110,13 +110,14 @@ class AdminController extends AbstractController
             $em->persist($admin);
             $em->flush();
 
-            return $this->redirectToRoute('admins');
+            return $this->redirectToRoute($back);
             
         }
 
         return $this->render('admin/create.html.twig',[
             'formAdmin' => $form->createView(),
-            'editMode' => $editMode
+            'editMode' => $editMode,
+            'back' => $back
         ]);
 
 

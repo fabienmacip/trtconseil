@@ -23,7 +23,19 @@
 {{ form_row(formConsultant.role, {'attr' : { 'placeholder' : 'role', 'value' : 'consultant', 'readonly' : 'true'}}) }}
 
 <input type="hidden" name="roles" placeholder="roles" value="[]"/>
-<a href="/consultants" role="button" class="btn btn-dark">Retour à la liste des consultants</a>
+
+{# Si on vient de la home page #}
+{% if back is defined and back is not same as 'consultants' %}
+    <a href="{{ path('home') }}" role="button" class="btn btn-dark">Retour</a>
+{# Si on vient de la liste des consultants #}
+{% else %}
+    <a href="/consultants" role="button" class="btn btn-dark">Retour à la liste des consultants</a>
+{% endif %}
+
+
+
+
+
 <button type="submit" class="btn btn-primary">
     {% if editMode %}
         Enregistrer les modifications

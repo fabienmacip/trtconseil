@@ -85,11 +85,11 @@ class RecruteurController extends AbstractController
     /**
      * CREATE or UPDATE
      * 
-     * @Route("/recruteur/update/{id}", name="recruteur_update", requirements={"id"="\d+"})
+     * @Route("/recruteur/update/{id}/{back}", name="recruteur_update", requirements={"id"="\d+"})
      * @Route("/recruteur/create/", name="recruteur_create")
      * @IsGranted("ROLE_RECRUTEUR")
      */
-    public function edit(Recruteur $recruteur = null, User $user = null, Request $request): Response
+    public function edit(Recruteur $recruteur = null, User $user = null, $back='recruteurs', Request $request): Response
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -153,7 +153,7 @@ class RecruteurController extends AbstractController
             $em->persist($recruteur);
             $em->flush();
 
-            return $this->redirectToRoute('recruteurs');
+            return $this->redirectToRoute($back);
             //return $this->render('recruteur', ['id' => $recruteur->getId()]);
         }
 
@@ -163,7 +163,7 @@ class RecruteurController extends AbstractController
                 $em->persist($user);
                 $em->flush();
     
-                return $this->redirectToRoute('recruteurs');
+                return $this->redirectToRoute($back);
                 //return $this->render('recruteur', ['id' => $recruteur->getId()]);
             } else if (!$formUser->isSubmitted()) {
                 var_dump("pas soumis");
@@ -174,7 +174,8 @@ class RecruteurController extends AbstractController
         return $this->render('recruteur/create.html.twig',[
             'formRecruteur' => $form->createView(),
             'formUser' => $formUser->createView(),
-            'editMode' => $editMode
+            'editMode' => $editMode,
+            'back' => $back
         ]);
 
 

@@ -79,11 +79,11 @@ class CandidatController extends AbstractController
     /**
      * EDIT (UPDATE)
      * 
-     * @Route("/candidat/update/{id}", name="candidat_update", requirements={"id"="\d+"})
+     * @Route("/candidat/update/{id}/{back}", name="candidat_update", requirements={"id"="\d+"})
      * @Route("/candidat/create/", name="candidat_create")
      * @IsGranted("ROLE_CANDIDAT")
      */
-    public function edit(Candidat $candidat = null, User $user = null, Request $request): Response
+    public function edit(Candidat $candidat = null, User $user = null, $back = 'candidats', Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -171,7 +171,7 @@ class CandidatController extends AbstractController
             } // FIN du IF($file)
 
 
-            return $this->redirectToRoute('candidats');
+            return $this->redirectToRoute($back);
             //return $this->render('candidat', ['id' => $candidat->getId()]);
         } // FIN du IF formulaire CV validé
 
@@ -180,7 +180,7 @@ class CandidatController extends AbstractController
                 $em->persist($user);
                 $em->flush();
     
-                return $this->redirectToRoute('candidats');
+                return $this->redirectToRoute($back);
                 //return $this->render('candidat', ['id' => $candidat->getId()]);
             } else if (!$formUser->isSubmitted()) {
                 var_dump("pas soumis");
@@ -191,7 +191,8 @@ class CandidatController extends AbstractController
         return $this->render('candidat/create.html.twig',[
             'formCandidat' => $form->createView(),
             'formUser' => $formUser->createView(),
-            'editMode' => $editMode
+            'editMode' => $editMode,
+            'back' => $back
         ]);
 
 

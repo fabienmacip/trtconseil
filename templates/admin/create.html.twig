@@ -23,7 +23,18 @@
 {{ form_row(formAdmin.role, {'attr' : { 'placeholder' : 'role', 'value' : 'admin', 'readonly' : 'true'}}) }}
 
 <input type="hidden" name="roles" placeholder="roles" value="[]"/>
-<a href="/admins" role="button" class="btn btn-dark">Retour à la liste des administrateurs</a>
+
+{# Si on vient de la home page #}
+{% if back is defined and back is not same as 'admins' %}
+    <a href="{{ path('home') }}" role="button" class="btn btn-dark">Retour</a>
+{# Si on vient de la liste des admins #}
+{% else %}
+    {# <a href="{{ path('admins') }}" role="button" class="btn btn-dark">Retour à la liste des administrateurs</a> #}
+    <a href="/admins" role="button" class="btn btn-dark">Retour à la liste des administrateurs</a>
+{% endif %}
+
+
+
 <button type="submit" class="btn btn-primary">
     {% if editMode %}
         Enregistrer les modifications
