@@ -33,6 +33,42 @@ class AdminController extends AbstractController
     }
 
 
+    /**
+     * UPDATE role (admin_tovalid / admin)
+     * 
+     * @Route("/admin/valider/{id}", name="admin_valider", requirements={"id"="\d+"})
+     * @Route("/admin/bloquer/{id}", name="admin_bloquer", requirements={"id"="\d+"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function role(User $admin = null, Request $request): Response
+    {
+            $em = $this->getDoctrine()->getManager();
+            
+            $role = '';
+
+            if($request->attributes->get('_route') === 'admin_bloquer')
+            {
+              $role = 'admin_tovalid';
+              $roles = ['ROLE_ADMIN_TOVALID'];
+            }
+            
+            if($request->attributes->get('_route') === 'admin_valider')
+            {
+                $role = 'admin';
+                $roles = ['ROLE_ADMIN'];
+            }
+
+            if($role !== '') {
+                $admin->setRole($role);
+                $admin->setRoles($roles);
+                $em->persist($admin);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('admins');
+
+        } // FIN function VALIDER ou BLOQUER
+
 
 
     /**

@@ -13,15 +13,50 @@
     <h1 class="px-2">Liste des administrateurs</h1>
     <a href="{{ path('admin_create', {}) }}" role="button" class="btn btn-success">Ajouter un administrateur</a>
 </div>
+<div class="p-2 locked my-1">
+    <ul>
+        {%for c in admins_locked %}
+            
+                <li class="mb-1">{{ c.nom|upper }} {{c.prenom|capitalize}} {{c.username|lower}}
+                    <a href="{{ path('admin_valider', {'id': c.id}) }}" class="btn btn-warning">Valider</a> -
+                    <a href="{{ path('app_admin', {'id': c.id}) }}" class="btn btn-info">Détail</a> - 
+                    <a href="{{ path('admin_update', {'id': c.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
+                    <a href="{{ path('admin_remove', {'id': c.id}) }}" role="button" class="btn btn-danger"
+                        onClick="return confirm('Confirmer la suppression de cet administrateur ? ')">Supprimer</a>
+                </li>
+            
+        {% else %}
+            <li><em>Aucun administrateur trouvé.</em></li>
+        {% endfor %}
+    </ul>
+</div>
+
 <div class="p-2 validated my-1">
     <ul>
         {%for c in admins %}
-            <li class="mb-1">{{ c.nom|upper }} {{c.prenom|capitalize}} {{c.username|lower}}
-                <a href="{{ path('app_admin', {'id': c.id}) }}" class="btn btn-info">Détail</a> - 
-                <a href="{{ path('admin_update', {'id': c.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                <a href="{{ path('admin_remove', {'id': c.id}) }}" role="button" class="btn btn-danger"
-                    onClick="return confirm('Confirmer la suppression de cet administrateur ? ')">Supprimer</a>
-            </li>
+            
+                <li class="mb-1">{{ c.nom|upper }} {{c.prenom|capitalize}} {{c.username|lower}}
+                    
+                    {# Un admin ne peut pas bloquer lui-même, sinon l'application le déconnecte et il n'y a plus accès #}
+                    {% if c.id is not same as app.user.id %}
+                        <a href="{{ path('admin_bloquer', {'id': c.id}) }}" class="btn btn-warning ">Bloquer</a> -
+                    {% else %}
+                        <button class="btn btn-warning" disabled>Bloquer</button>
+                    {% endif %}
+                    <a href="{{ path('app_admin', {'id': c.id}) }}" class="btn btn-info">Détail</a> - 
+                    <a href="{{ path('admin_update', {'id': c.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
+                    
+                    {# Un admin ne peut pas se supprimer lui-même, sinon l'application le déconnecte et il n'y a plus accès #}
+                    {% if c.id is not same as app.user.id %}
+                        <a href="{{ path('admin_remove', {'id': c.id}) }}" role="button" class="btn btn-danger"
+                            onClick="return confirm('Confirmer la suppression de cet administrateur ? ')">Supprimer</a>                        
+                    {% else %}
+                        <button class="btn btn-danger" disabled>Supprimer</button>
+                    {% endif %}
+
+
+                </li>
+            
         {% else %}
             <li><em>Aucun administrateur trouvé.</em></li>
         {% endfor %}

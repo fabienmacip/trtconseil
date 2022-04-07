@@ -10,13 +10,32 @@
 
 <h2>Home Page</h2>
 
+
 <div>
-    HOME PAGE
-</div>
-<div>
-{% if app.user %}
-{# {{dump(app.user)}} #}
-{# {{app.user.role}} #}
-{% endif %}
+    {% if app.user %}
+    {# {{dump(app.user)}} #}
+    {# {{app.user.role}} #}
+    {% endif %}
+
+    {# Affichage des données de l'utilisateur connecté #}
+    Bonjour {{ app.user.prenom }} {{ app.user.nom }}.
+    
+
+
+{#     {% switch app.user.role %}
+        {% case "admin" %}
+            {{ dump("admin") }}
+        {% case "consultant" %}
+            {{ dump("consultant") }}
+        {% case "recruteur" %}
+            {{ dump("recruteur") }}
+        {% case "candidat" %}
+            {{ dump("candidat") }}
+        {% default %}
+            {{ dump("default") }}
+    {% endswitch %}
+ #}
+
+
 </div>
 {% endblock %}

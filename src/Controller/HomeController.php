@@ -35,10 +35,12 @@ class HomeController extends AbstractController
         //---$this->doctrine;
         $em = $this->getDoctrine()->getManager();
         //$consultants = $em->getRepository(User::class)->findAll();
-        $admins = $em->getRepository(User::class)->findBy(['role' => 'admin']);
+        $adminsValidated = $em->getRepository(User::class)->findBy(['role' => 'admin']);
+        $adminsLocked = $em->getRepository(User::class)->findBy(['role' => 'admin_tovalid']);
 
         return $this->render('admin/all.html.twig', [
-            'admins' => $admins,
+            'admins' => $adminsValidated,
+            'admins_locked' => $adminsLocked
         ]);
     }
 
