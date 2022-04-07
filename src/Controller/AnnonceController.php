@@ -25,6 +25,8 @@ class AnnonceController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $annonce = $em->getRepository(Annonce::class)->findOneBy(['id'=>$id]);
 
+/*         $recruteur = $em->getRepository(Recruteur::class)->find($annonce->getRecruteur()->getId()); */
+
         $candidatures = $em->getRepository(Candidature::class)->findBy(['annonce' => $annonce]);
 
         /* Ajout d'un candidat fictif pour pouvoir tester le bouton POSTULER A UNE ANNONCE */
@@ -33,6 +35,7 @@ class AnnonceController extends AbstractController
 
         return $this->render('annonce/index.html.twig', [
             'annonce' => $annonce,
+            /* 'recruteur' => $recruteur, */
             'candidatures' => $candidatures,
             'candidat' => $candidatFictif,
         ]);
@@ -44,7 +47,7 @@ class AnnonceController extends AbstractController
      * 
      * @Route("/annonce/valider/{id}", name="annonce_valider", requirements={"id"="\d+"})
      * @Route("/annonce/bloquer/{id}", name="annonce_bloquer", requirements={"id"="\d+"})
-     * @IsGranted("ROLE_CONSULTANT")
+     * @IsGranted("ROLE_RECRUTEUR")
      */
     public function role(Annonce $annonce = null, Request $request): Response
     {
@@ -91,7 +94,7 @@ class AnnonceController extends AbstractController
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un annonce
         $editMode = true;
 
-        if(!$annonce) {
+        if(!$annonce || $request->attributes->get("_route") === "annonce_create") {
             $annonce = new Annonce();
 
             // *******************************************************************
@@ -101,7 +104,7 @@ class AnnonceController extends AbstractController
             $annonce->setRecruteur($recruteurObjet);
             
             $editMode = false;
-        }
+        } 
 
         //$form = $this->createForm(UserType::class, $annonce);
         $form = $this->createFormBuilder($annonce)
@@ -126,8 +129,8 @@ class AnnonceController extends AbstractController
             $em->persist($annonce);
             $em->flush();
 
-            unset($annonce);
-            unset($recruteurObjet);
+            //unset($annonce);
+            //unset($recruteurObjet);
 
             return $this->redirectToRoute('annonces');
             //return $this->render('annonce', ['id' => $recruteur->getId()]);

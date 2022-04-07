@@ -115,9 +115,12 @@ class HomeController extends AbstractController
          if($this->getUser()->getRole() === 'recruteur'){
              
             $recruteur = $em->getRepository(Recruteur::class)->findOneBy(['user'=>$this->getUser()->getId()]);
+            $recruteurId = $recruteur->getId();
             $liste = $em->getRepository(Annonce::class)->findBy(['recruteur'=>$recruteur->getId()]);
+            
         } else {
             $liste = $em->getRepository(Annonce::class)->findAll();
+            $recruteurId = 0;
         }
         
 
@@ -125,7 +128,8 @@ class HomeController extends AbstractController
 
         return $this->render('annonce/all.html.twig', [
             'annonces' => $liste,
-            'mailok' => $resultatMail
+            'mailok' => $resultatMail,
+            'id_recruteur' => $recruteurId
         ]); 
     }
 

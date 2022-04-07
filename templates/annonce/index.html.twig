@@ -27,16 +27,16 @@
         <div class="alert alert-dismissible alert-secondary">DESCRIPTION<br/>{{annonce.description}}</div>        
         
         <h3>Recruteur</h3>
-        <div class="alert alert-dismissible alert-light">
-            <div>{{annonce.getRecruteur().getEntrepriseNom()|capitalize}}</div>  
-            <div>{{annonce.getRecruteur().getEntrepriseCodePostal()}}</div>  
-            <div>{{annonce.getRecruteur().getEntrepriseVille()|upper}}</div>   
-        </div>
-       
+                <div class="alert alert-dismissible alert-light">
+                    <div>{{annonce.getRecruteur().getEntrepriseNom()|capitalize}}</div>  
+                    <div>{{annonce.getRecruteur().getEntrepriseCodePostal()}}</div>  
+                    <div>{{annonce.getRecruteur().getEntrepriseVille()|upper}}</div>   
+                </div>
     {% else %}
         <em>Données de l'annonce non trouvées.</em>
     {% endif %}
 
+        
 </div>
 
 <br/>
@@ -81,13 +81,16 @@
         {% endfor %}
     {% endif %}
 {% endif %}
-{% if dejapostule is same as false %}
-    <div>{# candidat.id #}
-        <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': '61'})}}" role="button" class="btn btn-success"
-        onClick="return confirm('Confirmer votre candidature à cette annonce ? ')">Postuler</a>
-    </div>
-{% endif %}
+{% if app.user.role is same as "candidat" %}
 
+    {% if dejapostule is same as false %}
+        <div>{# candidat.id #}
+            <a href="{{ path('candidature_create', {'annonce':annonce.id, 'candidat': '61'})}}" role="button" class="btn btn-success"
+            onClick="return confirm('Confirmer votre candidature à cette annonce ? ')">Postuler</a>
+        </div>
+    {% endif %}
+
+{% endif %}
 
 
 {# Bouton retour #}

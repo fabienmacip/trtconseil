@@ -15,12 +15,7 @@
 
 <textarea rows='4' id="form_description" name="form[description]" required="required" maxlength="255" class="form-control">{{formAnnonce.description.vars['data']}}</textarea>
 
-{# <input type="hidden" name="recruteur" value={{recruteur.id}}/> #}
-{# <button type="submit">
-        Enregistrer les modifications
-</button>
- #}
-<a href="/annonces" role="button" class="btn btn-dark">Retour à la liste des annonces</a>
+<a href="/annonces" role="button" class="btn btn-dark my-2">Retour à la liste des annonces</a>
 <button type="submit" class="btn btn-primary">
     {% if editMode %}
         Enregistrer les modifications

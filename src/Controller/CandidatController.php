@@ -176,7 +176,7 @@ class CandidatController extends AbstractController
         } // FIN du IF formulaire CV validé
 
         if($formUser->isSubmitted() && $formUser->isValid()) {
-            var_dump("valide user");
+            //var_dump("valide user");
                 $em->persist($user);
                 $em->flush();
     
