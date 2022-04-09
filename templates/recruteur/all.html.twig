@@ -13,50 +13,70 @@
 </style>
 
 
-<div class="example-wrapper locked mt-1">
+<div class="example-wrapper locked mt-1 pb-1">
     <h1 class="px-2">Liste des recruteurs à valider</h1>
-    <ul class="pb-1">
-        {%for r in recruteurs %}
-            {# Liste des recruteurs à valider #}
-            {% if r.user.role is same as 'recruteur_tovalid' %}
+    <table class="pb-1 my-1">
+        <tbody>
+            {%for r in recruteurs %}
+                {# Liste des recruteurs à valider #}
+                {% if r.user.role is same as 'recruteur_tovalid' %}
 
-                <li class="mb-1">
-                    <a href="{{ path('app_recruteur', {'id': r.id})}}" class="btn btn-info">Voir</a> 
-                    {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
-                    {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
-                    <a href="{{ path('recruteur_valider', {'id': r.id}) }}" class="btn btn-warning">Valider</a> -
-                    <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                    <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger" 
-                        onClick="return confirm('Confirmer la suppression de ce recruteur et de toutes ces annonces et leurs candidatures ? ')">Supprimer</a>
-                    
-                </li>
-            {% endif %}
-        {% else %}
-            <li><em>Aucun recruteur trouvé.</em></li>
-        {% endfor %}
-    </ul>
+                    <tr class="mb-1">
+                        <td>
+                        </td>
+                        <td>
+                            <a href="{{ path('app_recruteur', {'id': r.id})}}" class="btn btn-info mx-1">Voir</a>
+                        </td>
+                        <td>
+                            {{ r.user.nom|upper }} {{r.user.prenom|capitalize}}
+                        </td>
+                        <td>
+                            <span class="mx-3 badge bg-dark"> {{r.user.username|lower}} </span>
+                        </td>
+                        <td>
+                            <a href="{{ path('recruteur_valider', {'id': r.id}) }}" class="btn btn-warning mx-1">Valider</a>
+                            <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-primary mx-1">Modifier</a>
+                            <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger mx-1" 
+                                onClick="return confirm('Confirmer la suppression de ce recruteur et de toutes ces annonces et leurs candidatures ? ')">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr><td><em>Aucun recruteur trouvé.</em></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
-<div class="example-wrapper validated">
+<div class="example-wrapper validated mb-4">
     <h1 class="px-2">Liste des recruteurs validés</h1>
-    <ul class="pb-1">
-        {%for r in recruteurs %}
-            {# Liste des recruteurs déjà validés #}
-            {% if r.user.role is same as 'recruteur' %}
-            <li class="mb-1">
-                <a href="{{ path('app_recruteur', {'id': r.id})}}" class="btn btn-info">Voir</a> 
-                {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
-                {# <a href="{{ path('app_recruteur', {'id': r.id}) }}">Détail</a> -  #}
-                <a href="{{ path('recruteur_bloquer', {'id': r.id}) }}" class="btn btn-warning">Bloquer</a> -
-                <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger" 
-                    onClick="return confirm('Confirmer la suppression de ce recruteur et de toutes ces annonces et leurs candidatures ? ')">Supprimer</a>
-                
-            </li>
-            {% endif %}
-        {% else %}
-            <li><em>Aucun recruteur trouvé.</em></li>
-        {% endfor %}
-    </ul>
+    <table class="pb-1">
+        <tbody>
+            {%for r in recruteurs %}
+                {# Liste des recruteurs déjà validés #}
+                {% if r.user.role is same as 'recruteur' %}
+                <tr class="mb-1">
+                    <td>
+                        <a href="{{ path('app_recruteur', {'id': r.id})}}" class="btn btn-info mx-1">Voir</a> 
+                    </td>
+                    <td>
+                        {{ r.user.nom|upper }} {{r.user.prenom|capitalize}}
+                    </td>
+                    <td>
+                        <span class="mx-3 badge bg-dark"> {{r.user.username|lower}} </span>
+                    </td>
+                    <td>
+                        <a href="{{ path('recruteur_bloquer', {'id': r.id}) }}" class="btn btn-warning mx-1">Bloquer</a>
+                        <a href="{{ path('recruteur_update', {'id': r.id}) }}" role="button" class="btn btn-primary mx-1">Modifier</a> 
+                        <a href="{{ path('recruteur_remove', {'id': r.id}) }}" role="button" class="btn btn-danger mx-1" 
+                            onClick="return confirm('Confirmer la suppression de ce recruteur et de toutes ces annonces et leurs candidatures ? ')">Supprimer</a>
+                    </td>
+                </tr>
+                {% endif %}
+            {% else %}
+                <tr><td><em>Aucun recruteur trouvé.</em></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

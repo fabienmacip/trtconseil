@@ -16,62 +16,88 @@
 
 <div class="example-wrapper locked mt-1">
     <h1 class="px-2">Liste des candidats à valider</h1>
-    <ul class="pb-1">
+    <table class="mx-1">
+        <tbody>
         {%for r in candidats %}
             {# Liste des candidats à valider #}
             {% if r.user.role is same as 'candidat_tovalid' %}
 
-                <li class="mb-1">
-                    <a href="{{ path('app_candidat', {'id': r.id})}}" class="btn btn-info">Voir</a> 
-                    {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}} 
-                    {% if r.cv is not empty %}
-                    <a href={{ asset('uploads/cv/' ~ r.cv) }} target="_blank" class="icon-link">
-                        <img src={{ asset('icons/cv.png')}} title="CV" alt="cv" class="icon"/>
-                    </a>
-                    {% else %}
-                        <img src={{ asset('icons/no-cv.png')}} title="pas de cv" alt="pas de cv" class="icon" />
-                    {% endif %}
-                    <a href="{{ path('candidat_valider', {'id': r.id}) }}" class="btn btn-warning">Valider</a> -
-                    <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                    <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger"
-                        onClick="return confirm('Confirmer la suppression de ce candidat et de ses candidatures ? ')">Supprimer</a>
+                <tr class="mb-1">
+                    <td>
+                        <a href="{{ path('app_candidat', {'id': r.id})}}" class="btn btn-info">Voir</a> 
+                    </td>
+                    <td>
+                        {{ r.user.nom|upper }} {{r.user.prenom|capitalize}}
+                    </td>
+                    <td>
+                        <span class="mx-3 badge bg-dark"> {{r.user.username|lower}} </span>
+                    </td>
+                    <td>
+                        {% if r.cv is not empty %}
+                        <a href={{ asset('uploads/cv/' ~ r.cv) }} target="_blank" class="icon-link">
+                            <img src={{ asset('icons/cv.png')}} title="CV" alt="cv" class="icon"/>
+                        </a>
+                        {% else %}
+                            <img src={{ asset('icons/no-cv.png')}} title="pas de cv" alt="pas de cv" class="icon" />
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('candidat_valider', {'id': r.id}) }}" class="btn btn-warning mx-1">Valider</a>
+                        <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary mx-1">Modifier</a>
+                        <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger mx-1"
+                            onClick="return confirm('Confirmer la suppression de ce candidat et de ses candidatures ? ')">Supprimer</a>
+                    </td>
                     
-                </li>
+                </tr>
             {% endif %}
         {% else %}
-            <li><em>Aucun candidat trouvé.</em></li>
+            <tr><td><em>Aucun candidat trouvé.</em></td></tr>
         {% endfor %}
-    </ul>
+        </tbody>
+    <table>
 </div>
 
-<div class="example-wrapper validated">
+<div class="example-wrapper validated mt-1">
     <h1 class="px-2">Liste des candidats validés</h1>
-    <ul class="pb-1">
-        {%for r in candidats %}
-            {# Liste des candidats déjà validés #}
-            {% if r.user.role is same as 'candidat' %}
-            <li class="mb-1">
-                <a href="{{ path('app_candidat', {'id': r.id})}}" class="btn btn-info">Voir</a> 
-                {{ r.user.nom|upper }} {{r.user.prenom|capitalize}} {{r.user.username|lower}}
-                {% if r.cv is not empty %}
-                <a href={{ asset('uploads/cv/' ~ r.cv) }} target="_blank" class="icon-link">
-                    <img src={{ asset('icons/cv.png')}} title="CV" alt="cv" class="icon"/>
-                </a>
-                {% else %}
-                    <img src={{ asset('icons/no-cv.png')}} title="pas de cv" alt="pas de cv" class="icon" />
+    <table class="pb-1 mx-1">
+        <tbody>
+            {%for r in candidats %}
+                {# Liste des candidats déjà validés #}
+                {% if r.user.role is same as 'candidat' %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_candidat', {'id': r.id})}}" class="btn btn-info">Voir</a> 
+                    </td>
+                    <td>
+                        {{ r.user.nom|upper }} {{r.user.prenom|capitalize}}
+                    </td>
+                    <td>
+                        <span class="mx-3 badge bg-dark"> {{r.user.username|lower}} </span>
+                    </td>
+                    <td>
+                        {% if r.cv is not empty %}
+                        <a href={{ asset('uploads/cv/' ~ r.cv) }} target="_blank" class="icon-link">
+                            <img src={{ asset('icons/cv.png')}} title="CV" alt="cv" class="icon"/>
+                        </a>
+                        {% else %}
+                            <img src={{ asset('icons/no-cv.png')}} title="pas de cv" alt="pas de cv" class="icon" />
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('candidat_bloquer', {'id': r.id}) }}" class="btn btn-warning mx-1">Bloquer</a>
+                        <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary mx-1">Modifier</a>
+                        <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger mx-1"
+                            onClick="return confirm('Confirmer la suppression de ce candidat et de ses candidatures ? ')">Supprimer</a>
+                    </td>
+                </tr>
                 {% endif %}
-                {# <a href="{{ path('app_candidat', {'id': r.id}) }}">Détail</a> -  #}
-                <a href="{{ path('candidat_bloquer', {'id': r.id}) }}" class="btn btn-warning">Bloquer</a> -
-                <a href="{{ path('candidat_update', {'id': r.id}) }}" role="button" class="btn btn-primary">Modifier</a> - 
-                <a href="{{ path('candidat_remove', {'id': r.id}) }}" role="button" class="btn btn-danger"
-                    onClick="return confirm('Confirmer la suppression de ce candidat et de ses candidatures ? ')">Supprimer</a>
-                
-            </li>
-            {% endif %}
-        {% else %}
-            <li><em>Aucun candidat trouvé.</em></li>
-        {% endfor %}
-    </ul>
+            {% else %}
+                <tr><td><em>Aucun candidat trouvé.</em></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="my-4">
 </div>
 {% endblock %}
 {% block stylesheets %}
