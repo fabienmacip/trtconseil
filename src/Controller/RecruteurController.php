@@ -15,6 +15,8 @@ use App\Form\UserType;
 
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /* use App\Form\UserType;
@@ -89,7 +91,7 @@ class RecruteurController extends AbstractController
      * @Route("/recruteur/create/", name="recruteur_create")
      * @IsGranted("ROLE_RECRUTEUR")
      */
-    public function edit(Recruteur $recruteur = null, User $user = null, $back='recruteurs', Request $request): Response
+    public function edit(Recruteur $recruteur = null, User $user = null, UserPasswordHasherInterface $userPasswordHasher,  $back='recruteurs', Request $request): Response
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -159,6 +161,22 @@ class RecruteurController extends AbstractController
 
         if($formUser->isSubmitted() && $formUser->isValid()) {
             //var_dump("valide user");
+
+                // SET ROLES []
+                if($user->getRole() === 'recruteur') {
+                    $user->setRoles(['ROLE_RECRUTEUR']);
+                } else {
+                    $user->setRoles(['ROLE_RECRUTEUR_TOVALID']);
+                } // Fin SET ROLES []
+
+                // encodage du password
+                $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                        $user,
+                        $formUser->get('password')->getData()
+                    )
+                );
+
 
                 $em->persist($user);
                 $em->flush();

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ConsultantController extends AbstractController
 {
@@ -43,7 +44,7 @@ class ConsultantController extends AbstractController
      * @Route("/consultant/update/{id}/{back}", name="consultant_update", requirements={"id"="\d+"})
      * @IsGranted("ROLE_CONSULTANT")
      */
-    public function edit(User $consultant = null, $back = 'consultants', Request $request): Response
+    public function edit(User $consultant = null, UserPasswordHasherInterface $userPasswordHasher, $back = 'consultants', Request $request): Response
     {
 
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un consultant
@@ -61,6 +62,7 @@ class ConsultantController extends AbstractController
                     ->add('prenom')
                     ->add('username')
                     ->add('password')
+/*                     ->add('password_confirm') */
                     ->add('role')
                     ->getForm();
 
@@ -71,6 +73,29 @@ class ConsultantController extends AbstractController
             /* if(!$consultant->getId()){
                 $consultant->setCreatedAt(new \DateTime());
             } */
+
+            // SET ROLES []
+            if($consultant->getRole() === 'consultant') {
+                $consultant->setRoles(['ROLE_CONSULTANT']);
+            } else {
+                $consultant->setRoles(['ROLE_CONSULTANT_TOVALID']);
+            } // Fin SET ROLES []
+            // encodage du password
+            $consultant->setPassword(
+                $userPasswordHasher->hashPassword(
+                        $consultant,
+                        $form->get('password')->getData()
+                    )
+                );
+    
+/*                 $consultant->setPasswordConfirm(
+                    $userPasswordHasher->hashPassword(
+                            $consultant,
+                            $form->get('password_confirm')->getData()
+                        )
+                    ); */
+            // FIN de l'encodage du PASSWORD    
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($consultant);

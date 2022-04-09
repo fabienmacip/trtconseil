@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -83,7 +84,7 @@ class CandidatController extends AbstractController
      * @Route("/candidat/create/", name="candidat_create")
      * @IsGranted("ROLE_CANDIDAT")
      */
-    public function edit(Candidat $candidat = null, User $user = null, $back = 'candidats', Request $request): Response
+    public function edit(Candidat $candidat = null, User $user = null, UserPasswordHasherInterface $userPasswordHasher, $back = 'candidats', Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -177,6 +178,23 @@ class CandidatController extends AbstractController
 
         if($formUser->isSubmitted() && $formUser->isValid()) {
             //var_dump("valide user");
+                
+                // SET ROLES []
+                if($user->getRole() === 'candidat') {
+                    $user->setRoles(['ROLE_CANDIDAT']);
+                } else {
+                    $user->setRoles(['ROLE_CANDIDAT_TOVALID']);
+                } // Fin SET ROLES []
+            
+                // encodage du password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                            $user,
+                            $formUser->get('password')->getData()
+                        )
+                    );
+
+
                 $em->persist($user);
                 $em->flush();
     

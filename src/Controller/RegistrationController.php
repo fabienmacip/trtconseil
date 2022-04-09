@@ -41,7 +41,8 @@ class RegistrationController extends AbstractController
                     )
                 );
     
-            // Si le nouvel utilisateur est ADMIN
+            /* ********** ADMIN **************** */
+                // Si le nouvel utilisateur est ADMIN
             if($user->getRole() == "admin_tovalid") {
                 // ROLES
                 $user->setRoles(['ROLE_ADMIN_TOVALID']);

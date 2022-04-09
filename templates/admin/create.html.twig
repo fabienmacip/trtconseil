@@ -16,10 +16,11 @@
 
 {{ form_start(formAdmin) }}
 
+{{ form_row(formAdmin.username, {'attr' : { 'placeholder' : 'mail'}}) }}
 {{ form_row(formAdmin.nom, {'attr' : { 'placeholder' : 'nom'}}) }}
 {{ form_row(formAdmin.prenom, {'attr' : { 'placeholder' : 'prénom'}}) }}
-{{ form_row(formAdmin.username, {'attr' : { 'placeholder' : 'mail'}}) }}
-{{ form_row(formAdmin.password, {'type' : 'password'}) }}
+{{ form_row(formAdmin.password, {'type' : 'password', 'attr' : { 'placeholder' : 'minimum 8 caractères'}}) }}
+{# {{ form_row(formAdmin.password_confirm, {'type' : 'password', 'label': 'Confirmer le mot de passe','attr' : { 'placeholder' : 'minimum 8 caractères'}}) }} #}
 {{ form_row(formAdmin.role, {'attr' : { 'placeholder' : 'role', 'value' : 'admin', 'readonly' : 'true'}}) }}
 
 <input type="hidden" name="roles" placeholder="roles" value="[]"/>

@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AdminController extends AbstractController
 {
@@ -78,7 +79,7 @@ class AdminController extends AbstractController
      * @Route("/admin/update/{id}/{back}", name="admin_update", requirements={"id"="\d+"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(User $admin = null, Request $request, $back = 'admins'): Response
+    public function edit(User $admin = null, Request $request, UserPasswordHasherInterface $userPasswordHasher, $back = 'admins'): Response
     {
 
         // Savoir si on est en MODIFICATION (edit) ou AJOUT d'un consultant
@@ -95,16 +96,34 @@ class AdminController extends AbstractController
                     ->add('prenom')
                     ->add('username')
                     ->add('password')
+                    /* ->add('password_confirm') */
                     ->add('role')
                     ->getForm();
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            // Si le consultant n'existe pas encore, on met une date de création.
-            /* if(!$consultant->getId()){
-                $consultant->setCreatedAt(new \DateTime());
-            } */
+
+            if($admin->getRole() === 'admin') {
+                $admin->setRoles(['ROLE_ADMIN']);
+            } else {
+                $admin->setRoles(['ROLE_ADMIN_TOVALID']);
+            }
+            // encodage du password
+            $admin->setPassword(
+                $userPasswordHasher->hashPassword(
+                        $admin,
+                        $form->get('password')->getData()
+                    )
+                );
+    
+                /* $admin->setPasswordConfirm(
+                    $userPasswordHasher->hashPassword(
+                            $admin,
+                            $form->get('password_confirm')->getData()
+                        )
+                    ); */
+            // FIN de l'encodage du PASSWORD    
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($admin);
