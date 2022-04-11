@@ -206,6 +206,16 @@ https://www.youtube.com/watch?v=yCPiX7_fy30
 
 > git push heroku master ( ou ici, main)
 
+Ajouter un fichier procfile sur Heroku
+
+Si besoin de vider le cache :  
+> heroku run php bin/console cache:clear
+
+### APACHE
+> composer req apache-pack  
+Pour le retirer  
+> composer rem apache-pack  
+
 
 
 
