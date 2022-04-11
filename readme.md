@@ -174,6 +174,41 @@ force_sender=VotreGmailId@gmail.com(optionnel)
 > use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;  
 > * @IsGranted("ROLE_ADMIN")  
 
+# BUILD
+> symfony check:requirements  
+> Créer un fichier .env.local  
+Une seule ligne : les infos de connexion à la BDD distante  
+
+### Sur la console du serveur
+> php bin/console doctrine:database:create  --if-not-exists
+> composer install --no-dev --optimize-autoloader
+
+#### .env.local
+APP_ENV=prod
+APP_DEBUG=0
+
+> php bin/console cache:clear
+
+On peut aussi regrouper ces 3 dernières instructions :  
+APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+
+
+## Sur Heroku
+Voir  
+https://www.youtube.com/watch?v=yCPiX7_fy30
+
+
+> heroku login  
+> heroku create trtconseilprod  
+> heroku open  
+
+> heroku config:set APP_ENV=prod  (si ce n'est pas déjà fait dans le fichier .env ou .env.local)
+
+> git push heroku master ( ou ici, main)
+
+
+
+
 
 
 
