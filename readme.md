@@ -216,6 +216,12 @@ Si besoin de vider le cache :
 Pour le retirer  
 > composer rem apache-pack  
 
+### DataBase
+
+> heroku addons:create heroku-postgresql:hobby-dev  
+Created postgresql-silhouetted-03147 as DATABASE_URL  
+Use heroku addons:docs heroku-postgresql to view documentation  
+
 
 
 
