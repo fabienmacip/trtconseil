@@ -125,7 +125,7 @@ php bin/console make:auth
 Puis on modifie 
 config/packages/security.yaml
 On ajoute ces 2 lignes à access_control:
-- { path: ^/(login|register), roles: IS_AUTHENTICATED_ANONYMOUSLY}
+- { path: ^/(login|register), roles: IS_AUTHENTICATED_ANONYMOUSLY} // Déprécié ? remplacer par IS_AUTHENTICATED ou IS_AUTHENTICATED_FULLY ou PUBLIC_ACCESS ?
 - { path: ^/, roles: IS_AUTHENTICATED_FULLY}
 
 # Interface d'amdministration
